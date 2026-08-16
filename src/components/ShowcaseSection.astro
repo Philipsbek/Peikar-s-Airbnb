@@ -1,0 +1,365 @@
+---
+import host from '../data/host.json';
+
+// Evocative 2–3 word stacked titles per property (keyed by listing id).
+const titleMap: Record<string, string[]> = {
+  '1202454849994971601': ['Grand', '3-Storey', 'Villa'],
+  '1203381190173597069': ['June’s', 'Luxury', 'House'],
+  '1284511641232495449': ['Cozy', 'Poolside', 'House'],
+  '1315728568028876109': ['Beachside', 'Escape'],
+  '1316644318333801082': ['Party', 'Pool', 'House'],
+  '1327336765454565106': ['Newly', 'Renovated', 'Home'],
+  '1446805221986783802': ['Teluk', 'Cempedak', 'Bungalow'],
+  '1446869038805495580': ['Cozy', 'Town', 'House'],
+  '1461543700474356396': ['Cosy', 'Big', 'House'],
+};
+
+const fmtSub = (s: (typeof host.listings)[number]) => {
+  const parts = ['Entire place', `Sleeps ${s.guests}`];
+  if (s.bedrooms) parts.push(`${s.bedrooms} bedrooms`);
+  return parts.join(' · ');
+};
+const fmtMeta = (s: (typeof host.listings)[number]) =>
+  `★ ${s.rating.toFixed(2)} — ${s.reviewCount} reviews`;
+
+const slides = host.listings.map((l) => ({
+  ...l,
+  lines: titleMap[l.id] ?? [l.shortName],
+  sub: fmtSub(l),
+  meta: fmtMeta(l),
+}));
+
+const total = slides.length;
+const first = slides[0];
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<section class="mv" aria-label="Featured stays" aria-roledescription="carousel">
+  <div class="mv-stage">
+    {slides.map((s, i) => (
+      <div
+        class:list={['mv-slide', { 'is-active': i === 0 }]}
+        style={`background-image: url('${s.image}')`}
+        data-lines={JSON.stringify(s.lines)}
+        data-sub={s.sub}
+        data-meta={s.meta}
+        data-href={s.url}
+        aria-hidden={i === 0 ? 'false' : 'true'}
+      />
+    ))}
+  </div>
+
+  <div class="mv-overlay"></div>
+
+  <div class="mv-content">
+    <div class="mv-inner">
+      <span class="mv-eyebrow" id="mv-eyebrow">Featured stay — {pad(1)} / {pad(total)} · Kuantan, MY</span>
+      <h2 class="mv-title" id="mv-title">
+        {first.lines.map((line) => <span class="mv-line">{line}</span>)}
+      </h2>
+      <p class="mv-sub" id="mv-sub">{first.sub}</p>
+      <a class="mv-btn" id="mv-btn" href={first.url} target="_blank" rel="noopener">Explore this stay</a>
+    </div>
+  </div>
+
+  <span class="mv-meta" id="mv-meta">{first.meta}</span>
+
+  <div class="mv-dots" role="tablist" aria-label="Choose a stay">
+    {slides.map((_, i) => (
+      <button class:list={['mv-dot', { 'is-active': i === 0 }]} data-go={i} aria-label={`Go to stay ${i + 1}`} />
+    ))}
+  </div>
+</section>
+
+<style>
+  .mv {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: #000000; /* Void */
+    overflow: hidden;
+    display: flex;
+  }
+
+  /* Overscanned stage — holds the stacked image slides + receives parallax. */
+  .mv-stage {
+    position: absolute;
+    top: -14%;
+    left: 0;
+    right: 0;
+    height: 128%;
+    will-change: transform;
+  }
+
+  /* Each property image; only the active one is visible + running Ken Burns. */
+  .mv-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    will-change: opacity;
+  }
+  .mv-slide.is-active {
+    opacity: 1;
+    animation: mv-kenburns 8s ease-out forwards;
+  }
+  @keyframes mv-kenburns {
+    from { transform: scale(1.04) translate(0, 0); }
+    to   { transform: scale(1.17) translate(-1.6%, -1.6%); }
+  }
+
+  /* Void wash so white ink reads over the render */
+  .mv-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.15) 100%),
+      linear-gradient(0deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0) 55%);
+  }
+
+  /* Outer content box receives the scroll parallax translate. */
+  .mv-content {
+    position: relative;
+    z-index: 2;
+    align-self: flex-end;
+    padding: clamp(28px, 6vw, 80px);
+    max-width: 900px;
+    will-change: transform, opacity;
+  }
+  /* Inner wrapper handles the smooth text swap (independent transform). */
+  .mv-inner {
+    transition:
+      opacity 0.45s ease,
+      transform 0.5s cubic-bezier(0.22, 0.7, 0.24, 1);
+  }
+  .mv-inner.mv-swap {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  .mv-eyebrow {
+    display: block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #e2e2e2; /* Frost */
+    margin-bottom: 24px;
+  }
+
+  .mv-title {
+    font-family: var(--font-supreme);
+    font-weight: 400;
+    font-size: clamp(44px, 9vw, 120px);
+    line-height: 0.82;
+    letter-spacing: -0.01em;
+    color: #ffffff; /* Bone */
+    margin: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  .mv-sub {
+    font-family: var(--font-supreme);
+    font-weight: 400;
+    font-size: clamp(18px, 2.4vw, 26px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin-top: 28px;
+  }
+
+  .mv-btn {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 12px 24px;
+    background: #444345; /* Charcoal */
+    border: 1px solid rgba(226, 226, 226, 0.6);
+    border-radius: 2px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #ffffff;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .mv-btn:hover {
+    background: #5a595b;
+    border-color: #ffffff;
+  }
+
+  .mv-meta {
+    position: absolute;
+    right: clamp(20px, 5vw, 60px);
+    bottom: clamp(20px, 5vw, 60px);
+    z-index: 2;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #e2e2e2;
+    transition: opacity 0.45s ease, transform 0.5s cubic-bezier(0.22, 0.7, 0.24, 1);
+  }
+  .mv-meta.mv-swap {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  /* Index bars */
+  .mv-dots {
+    position: absolute;
+    left: clamp(28px, 6vw, 80px);
+    bottom: clamp(18px, 3.5vw, 34px);
+    z-index: 2;
+    display: flex;
+    gap: 8px;
+  }
+  .mv-dot {
+    width: 28px;
+    height: 3px;
+    padding: 0;
+    border: 0;
+    border-radius: 2px;
+    background: rgba(226, 226, 226, 0.35);
+    cursor: pointer;
+    transition: background 0.3s ease, width 0.3s ease;
+  }
+  .mv-dot:hover { background: rgba(255, 255, 255, 0.7); }
+  .mv-dot.is-active { background: #ffffff; width: 44px; }
+
+  /* Tablet — same breathing room between content and the index bars */
+  @media (min-width: 561px) and (max-width: 1024px) {
+    .mv-content { padding-bottom: 104px; }
+    .mv-dots { bottom: 34px; }
+  }
+
+  @media (max-width: 560px) {
+    .mv-meta { display: none; }
+    /* Lift the content so the button clears the index bars below it */
+    .mv-content { padding-bottom: 88px; }
+    .mv-title { font-size: clamp(38px, 13vw, 72px); }
+    .mv-dots { bottom: 28px; gap: 6px; }
+    .mv-dot { width: 20px; }
+    .mv-dot.is-active { width: 32px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mv-slide.is-active { animation: none; transform: scale(1.05); }
+    .mv-inner.mv-swap,
+    .mv-meta.mv-swap { transform: none; }
+  }
+</style>
+
+<!-- Global so the JS-rebuilt title spans (which lack Astro's scope hash) keep
+     their block stacking + underline mark. Namespaced under .mv to stay contained. -->
+<style is:global>
+  .mv .mv-line {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    padding-bottom: 6px;
+  }
+  .mv .mv-line::after {
+    content: '';
+    display: block;
+    width: 42%;
+    height: 1px;
+    margin-top: 6px;
+    background: #e2e2e2;
+  }
+</style>
+
+<script>
+  const section = document.querySelector<HTMLElement>('.mv');
+  const stage = document.querySelector<HTMLElement>('.mv-stage');
+  const content = document.querySelector<HTMLElement>('.mv-content');
+  const inner = document.querySelector<HTMLElement>('.mv-inner');
+  const slides = Array.from(document.querySelectorAll<HTMLElement>('.mv-slide'));
+  const dots = Array.from(document.querySelectorAll<HTMLElement>('.mv-dot'));
+  const eyebrow = document.getElementById('mv-eyebrow');
+  const title = document.getElementById('mv-title');
+  const sub = document.getElementById('mv-sub');
+  const btn = document.getElementById('mv-btn') as HTMLAnchorElement | null;
+  const meta = document.getElementById('mv-meta');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (section && stage && slides.length) {
+    const total = slides.length;
+    const pad = (n: number) => String(n).padStart(2, '0');
+    let idx = 0;
+    let timer: number | undefined;
+
+    const render = (i: number) => {
+      const s = slides[i];
+      const lines: string[] = JSON.parse(s.dataset.lines || '[]');
+      // Fade the text out, swap, fade back in — smooth cross-dissolve.
+      inner?.classList.add('mv-swap');
+      meta?.classList.add('mv-swap');
+      window.setTimeout(() => {
+        if (eyebrow) eyebrow.textContent = `Featured stay — ${pad(i + 1)} / ${pad(total)} · Kuantan, MY`;
+        if (title) title.innerHTML = lines.map((l) => `<span class="mv-line">${l}</span>`).join('');
+        if (sub) sub.textContent = s.dataset.sub || '';
+        if (btn) btn.href = s.dataset.href || '#';
+        if (meta) meta.textContent = s.dataset.meta || '';
+        inner?.classList.remove('mv-swap');
+        meta?.classList.remove('mv-swap');
+      }, 460);
+    };
+
+    const go = (i: number) => {
+      idx = (i + total) % total;
+      slides.forEach((s, si) => {
+        s.classList.toggle('is-active', si === idx);
+        s.setAttribute('aria-hidden', si === idx ? 'false' : 'true');
+      });
+      dots.forEach((d, di) => d.classList.toggle('is-active', di === idx));
+      render(idx);
+    };
+
+    const startTimer = () => {
+      window.clearInterval(timer);
+      timer = window.setInterval(() => go(idx + 1), 6000);
+    };
+
+    dots.forEach((d) =>
+      d.addEventListener('click', () => {
+        go(Number(d.dataset.go));
+        startTimer();
+      })
+    );
+
+    section.addEventListener('mouseenter', () => window.clearInterval(timer));
+    section.addEventListener('mouseleave', startTimer);
+
+    startTimer();
+
+    // --- Scroll parallax (image + content drift), gated for reduced motion ---
+    if (!reduce && content) {
+      let ticking = false;
+      const update = () => {
+        const rect = section.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const center = rect.top + rect.height / 2;
+        const p = Math.max(-1.2, Math.min(1.2, (center - vh / 2) / vh));
+        stage.style.transform = `translate3d(0, ${p * 7}%, 0)`;
+        content.style.transform = `translate3d(0, ${p * -4}%, 0)`;
+        content.style.opacity = String(1 - Math.min(Math.abs(p) * 0.4, 0.55));
+        ticking = false;
+      };
+      const onScroll = () => {
+        if (!ticking) {
+          window.requestAnimationFrame(update);
+          ticking = true;
+        }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      update();
+    }
+  }
+</script>

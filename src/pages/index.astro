@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import ListingCard from '../components/ListingCard.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
+import ShowcaseSection from '../components/ShowcaseSection.astro';
 import host from '../data/host.json';
 
 // De-duplicate listings that are the same property relisted (same short name).
@@ -44,7 +45,32 @@ const facts = [
       </div>
     </div>
 
-    <aside class="hero-card">
+    <aside class="hero-card" id="hero-card">
+      <div class="hc-bg" aria-hidden="true">
+        <span class="hc-blob hc-blob--1"></span>
+        <span class="hc-blob hc-blob--2"></span>
+        <span class="hc-blob hc-blob--3"></span>
+        <span class="hc-blob hc-blob--4"></span>
+        <svg class="hc-doodle" viewBox="0 0 400 560" fill="none" preserveAspectRatio="xMidYMid slice">
+          <!-- sun, top-right -->
+          <g class="hc-d hc-d--1" stroke="#e8846e" stroke-width="2.4" stroke-linecap="round">
+            <circle cx="330" cy="70" r="18" />
+            <path d="M330 34v-14M330 120v-14M366 70h14M280 70h14M356 44l10-10M294 106l10-10M356 96l10 10M294 34l10 10" />
+          </g>
+          <!-- little house, bottom-left -->
+          <g class="hc-d hc-d--2" stroke="#5ba894" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M40 500l34-28 34 28M48 494v34h52v-34M66 528v-20h16v20" />
+          </g>
+          <!-- squiggle, mid -->
+          <path class="hc-d hc-d--3" d="M40 250c14-16 30-16 44 0s30 16 44 0 30-16 44 0" stroke="#c9a0d6" stroke-width="2.4" stroke-linecap="round" />
+          <!-- sparkles -->
+          <g class="hc-d hc-d--4" stroke="#e8b45e" stroke-width="2.2" stroke-linecap="round">
+            <path d="M120 110v16M112 118h16" />
+            <path d="M300 470v12M294 476h12" />
+          </g>
+        </svg>
+      </div>
+
       <span class="badge">Meet your host</span>
       <div class="hero-card-host">
         <img src={host.profilePhoto} alt="Peikar, Superhost" width="72" height="72" />
@@ -67,6 +93,18 @@ const facts = [
           <span class="stat-label">Homes</span>
         </div>
       </div>
+      <div class="hc-tip">
+        <span class="hc-tip-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z" />
+          </svg>
+        </span>
+        <p class="hc-tip-text">
+          <strong>Quick tip:</strong> Message Peikar before you book — he usually replies within
+          minutes and can help pick the right home for your group size.
+        </p>
+      </div>
+
       <a href="#stays" class="btn btn--white hero-card-cta">Browse the stays</a>
     </aside>
   </section>
@@ -109,6 +147,9 @@ const facts = [
       </div>
     </div>
   </section>
+
+  <!-- ==================== FULL-SCREEN SHOWCASE (MekaVerse) ==================== -->
+  <ShowcaseSection />
 
   <!-- ============================ ABOUT ============================ -->
   <section id="about" class="section about">
@@ -222,6 +263,42 @@ const facts = [
   </footer>
 </Base>
 
+<script>
+  // Pointer-parallax for the illustrated "Meet your host" card.
+  const card = document.getElementById('hero-card');
+  const bg = card?.querySelector<HTMLElement>('.hc-bg');
+  const doodle = card?.querySelector<HTMLElement>('.hc-doodle');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (card && bg && !reduce && window.matchMedia('(hover: hover)').matches) {
+    let raf = 0;
+    let mx = 0;
+    let my = 0;
+
+    const apply = () => {
+      // Blob layer drifts toward the cursor, doodles drift away → depth.
+      bg.style.transform = `translate3d(${mx * 12}px, ${my * 12}px, 0)`;
+      if (doodle) doodle.style.transform = `translate3d(${mx * -22}px, ${my * -22}px, 0)`;
+      raf = 0;
+    };
+
+    const onMove = (e: PointerEvent) => {
+      const r = card.getBoundingClientRect();
+      mx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      my = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      if (!raf) raf = window.requestAnimationFrame(apply);
+    };
+
+    const reset = () => {
+      bg.style.transform = 'translate3d(0,0,0)';
+      if (doodle) doodle.style.transform = 'translate3d(0,0,0)';
+    };
+
+    card.addEventListener('pointermove', onMove);
+    card.addEventListener('pointerleave', reset);
+  }
+</script>
+
 <style>
   /* ---------- Hero ---------- */
   .hero {
@@ -251,7 +328,7 @@ const facts = [
     font-size: clamp(30px, 4vw, 48px);
     font-weight: 700;
     line-height: 1.05;
-    letter-spacing: -0.05em;
+    letter-spacing: 0;
     max-width: 14ch;
   }
   .hero-sub { margin-top: var(--spacing-16); max-width: 46ch; font-size: var(--text-body); color: #f0f0ea; }
@@ -259,42 +336,128 @@ const facts = [
   .hero-card {
     position: relative;
     isolation: isolate;
-    color: #fff;
+    color: #2b2621;
     border-radius: var(--radius-cards);
     padding: var(--card-padding);
     display: flex;
     flex-direction: column;
     gap: var(--spacing-24);
     overflow: hidden;
-    background-image: url('/images/host-bg.jpg');
-    background-size: cover;
-    background-position: center;
+    /* Soft, gentle pastel wash */
+    background: linear-gradient(155deg, #fff5ef 0%, #ffe9e0 45%, #eef4f7 100%);
+    --mx: 0;
+    --my: 0;
   }
-  /* Legibility overlay over the nature wallpaper */
-  .hero-card::before {
-    content: '';
+
+  /* Illustrated background layer — parallaxes as a group */
+  .hc-bg {
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.62) 100%);
+    overflow: hidden;
+    transition: transform 0.35s ease-out;
+    will-change: transform;
   }
-  .hero-card .badge { background: var(--color-ink-black); color: #fff; align-self: flex-start; }
+
+  .hc-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(34px);
+    opacity: 0.6;
+    will-change: transform;
+  }
+  .hc-blob--1 { width: 210px; height: 210px; top: -50px; left: -50px; background: #ffb9a6; animation: hc-float-a 11s ease-in-out infinite alternate; }
+  .hc-blob--2 { width: 180px; height: 180px; top: -30px; right: -40px; background: #ffdcae; animation: hc-float-b 13s ease-in-out infinite alternate; }
+  .hc-blob--3 { width: 200px; height: 200px; bottom: -50px; left: -30px; background: #b9e3d3; animation: hc-float-b 12s ease-in-out infinite alternate; }
+  .hc-blob--4 { width: 240px; height: 240px; bottom: -70px; right: -60px; background: #c7d7f2; animation: hc-float-a 15s ease-in-out infinite alternate; }
+
+  /* Doodles parallax in the opposite direction for depth */
+  .hc-doodle {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    transition: transform 0.4s ease-out;
+    will-change: transform;
+  }
+  .hc-d { transform-box: fill-box; transform-origin: center; }
+  .hc-d--1 { animation: hc-spin 26s linear infinite; transform-origin: 330px 70px; }
+  .hc-d--2 { animation: hc-bob 6s ease-in-out infinite; }
+  .hc-d--3 { animation: hc-bob 7s ease-in-out infinite 0.5s; }
+  .hc-d--4 { animation: hc-twinkle 3.5s ease-in-out infinite; }
+
+  @keyframes hc-float-a {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(14px, -18px) scale(1.08); }
+  }
+  @keyframes hc-float-b {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-16px, 14px) scale(1.06); }
+  }
+  @keyframes hc-spin { to { transform: rotate(360deg); } }
+  @keyframes hc-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  @keyframes hc-twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .hero-card .badge { align-self: flex-start; }
   .hero-card-host { display: flex; align-items: center; gap: var(--spacing-16); }
-  .hero-card-host img { width: 72px; height: 72px; border-radius: var(--radius-full); border: 2px solid #fff; object-fit: cover; }
-  .hero-card-name { font-size: var(--text-heading); font-weight: 700; letter-spacing: -0.05em; }
-  .hero-card-role { font-size: var(--text-caption); opacity: 0.9; }
+  .hero-card-host img {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-full);
+    border: 3px solid #fff;
+    object-fit: cover;
+  }
+  .hero-card-name { font-size: var(--text-heading); font-weight: 700; letter-spacing: 0; }
+  .hero-card-role { font-size: var(--text-caption); color: #7a716a; }
   .hero-card-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-12);
-    border-top: 1px solid rgba(255, 255, 255, 0.35);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding-block: var(--spacing-20);
   }
   .hero-card-stats > div { display: flex; flex-direction: column; }
-  .stat-value { font-size: var(--text-heading); font-weight: 700; letter-spacing: -0.05em; }
-  .stat-label { font-size: var(--text-caption); opacity: 0.9; }
+  .stat-value { font-size: var(--text-heading); font-weight: 700; letter-spacing: 0; }
+  .stat-label { font-size: var(--text-caption); color: #7a716a; }
+  .hc-tip {
+    display: flex;
+    gap: var(--spacing-12);
+    align-items: flex-start;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-cards);
+    padding: 14px 16px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .hc-tip-icon {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(255, 90, 95, 0.12);
+    color: var(--color-coral-pulse);
+  }
+  .hc-tip-text { font-size: var(--text-caption); line-height: 1.45; color: #5a5049; }
+  .hc-tip-text strong { color: #2b2621; font-weight: 700; }
+
   .hero-card-cta { justify-content: center; margin-top: auto; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hc-blob, .hc-d { animation: none !important; }
+    .hc-bg, .hc-doodle { transform: none !important; }
+  }
 
   @media (max-width: 860px) {
     .hero { grid-template-columns: 1fr; }
@@ -408,7 +571,7 @@ const facts = [
     flex-direction: column;
     gap: var(--spacing-4);
   }
-  .travel-loc { font-size: var(--text-subheading); font-weight: 700; letter-spacing: -0.05em; }
+  .travel-loc { font-size: var(--text-subheading); font-weight: 700; letter-spacing: 0; }
   .travel-date { font-size: var(--text-caption); color: var(--color-coral-pulse); font-weight: 700; }
   @media (max-width: 640px) { .travel-grid { grid-template-columns: 1fr; } }
 
@@ -437,14 +600,14 @@ const facts = [
     z-index: -1;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.6) 100%);
   }
-  .cta-title { font-size: var(--text-display); font-weight: 700; letter-spacing: -0.05em; line-height: 1.1; max-width: 18ch; }
+  .cta-title { font-size: var(--text-display); font-weight: 700; letter-spacing: 0; line-height: 1.1; max-width: 18ch; }
   .cta-sub { max-width: 46ch; font-size: var(--text-subheading); opacity: 0.95; }
   .cta-btn { margin-top: var(--spacing-8); }
 
   /* ---------- Footer ---------- */
   .footer { background: var(--color-ink-black); color: #fff; padding-block: var(--spacing-64); }
   .footer-inner { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--spacing-24); flex-wrap: wrap; }
-  .footer-brand { font-size: var(--text-heading); font-weight: 700; letter-spacing: -0.05em; }
+  .footer-brand { font-size: var(--text-heading); font-weight: 700; letter-spacing: 0; }
   .footer-brand span { color: var(--color-coral-pulse); margin-inline: 2px; }
   .footer-note { font-size: var(--text-caption); opacity: 0.7; margin-top: 4px; }
   .footer-fine { font-size: var(--text-caption); opacity: 0.55; max-width: 48ch; }
