@@ -1,0 +1,141 @@
+/* ==========================================================================
+   bella Kitchen Appliances design system — "sunlit kitchen counter at golden hour"
+   Warm cream canvas · single coral accent · tight -0.05em tracking · pill shapes
+   ========================================================================== */
+
+:root {
+  /* Colors */
+  --color-warm-canvas: #ffffff;
+  --color-pristine-surface: #ffffff;
+  --color-sand-beige: #f5f2eb;
+  --color-ink-black: #000000;
+  --color-coral-pulse: #ff5a5f;
+
+  /* Hairline used to define white surfaces against the white canvas */
+  --hairline: 1px solid rgba(0, 0, 0, 0.1);
+
+  /* Fonts — Supreme LL TT substitute stack */
+  --font-supreme: 'General Sans', 'DM Sans', Inter, ui-sans-serif, system-ui,
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Type scale */
+  --text-caption: 13px;
+  --text-body: 16px;
+  --text-subheading: 18px;
+  --text-heading-sm: 22px;
+  --text-heading: 24px;
+  --text-display: 40px;
+
+  /* Spacing */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-64: 64px;
+  --spacing-72: 72px;
+  --spacing-96: 96px;
+
+  /* Layout */
+  --page-max-width: 1200px;
+  --section-gap: 80px;
+  --card-padding: 24px;
+  --element-gap: 12px;
+
+  /* Radius */
+  --radius-cards: 12px;
+  --radius-full: 999px;
+}
+
+/* Reset ------------------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+* { margin: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-supreme);
+  font-size: var(--text-body);
+  line-height: 1.5;
+  letter-spacing: -0.05em;
+  color: var(--color-ink-black);
+  background: var(--color-warm-canvas);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; letter-spacing: -0.05em; cursor: pointer; }
+
+/* Shared layout helpers --------------------------------------------------- */
+.container {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding-inline: var(--spacing-16);
+}
+
+.section { padding-block: var(--section-gap); }
+
+.eyebrow {
+  font-size: var(--text-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-coral-pulse);
+}
+
+.section-title {
+  font-size: var(--text-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+}
+
+@media (max-width: 640px) {
+  :root { --section-gap: 56px; }
+  .section-title { font-size: 30px; }
+}
+
+/* Pill button ------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-body);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  border: 1px solid var(--color-ink-black);
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+
+.btn--white { background: var(--color-pristine-surface); color: var(--color-ink-black); }
+.btn--white:hover { background: var(--color-ink-black); color: var(--color-pristine-surface); }
+
+.btn--ghost { background: transparent; color: var(--color-ink-black); }
+.btn--ghost:hover { background: var(--color-ink-black); color: var(--color-pristine-surface); }
+
+.btn--coral { background: var(--color-coral-pulse); color: #fff; border-color: var(--color-coral-pulse); }
+.btn--coral:hover { background: var(--color-ink-black); border-color: var(--color-ink-black); }
+
+/* Badge ------------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: var(--color-coral-pulse);
+  color: #fff;
+  font-size: var(--text-caption);
+  font-weight: 700;
+}

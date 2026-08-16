@@ -1,0 +1,87 @@
+---
+interface Listing {
+  id: string;
+  name: string;
+  shortName: string;
+  roomType: string;
+  rating: number;
+  reviewCount: number;
+  guests: number | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  image: string;
+  url: string;
+}
+const { listing } = Astro.props as { listing: Listing };
+
+const facts = [
+  listing.guests ? `${listing.guests} guests` : null,
+  listing.bedrooms ? `${listing.bedrooms} bedrooms` : null,
+  listing.bathrooms ? `${listing.bathrooms} baths` : null,
+].filter(Boolean);
+
+const isTopRated = listing.rating >= 4.9;
+---
+
+<a class="card" href={listing.url} target="_blank" rel="noopener">
+  <div class="card-media">
+    <img src={listing.image} alt={listing.shortName} loading="lazy" width="600" height="450" />
+    {isTopRated && <span class="badge card-badge">Guest favourite</span>}
+    <span class="card-roomtype">{listing.roomType}</span>
+  </div>
+  <div class="card-body">
+    <h3 class="card-title">{listing.shortName}</h3>
+    <p class="card-facts">{facts.join('  ·  ')}</p>
+    <div class="card-foot">
+      <span class="card-rating">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="#ff5a5f" d="M8 12.2 3.6 15l1.2-5-3.9-3.4 5.1-.4L8 1.5l2 4.7 5.1.4-3.9 3.4 1.2 5z"/></svg>
+        {listing.rating.toFixed(2)}
+      </span>
+      <span class="card-reviews">{listing.reviewCount} reviews</span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-pristine-surface);
+    border: var(--hairline);
+    border-radius: var(--radius-cards);
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+  .card:hover { transform: translateY(-4px); }
+  .card:hover .card-media img { transform: scale(1.04); }
+
+  .card-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
+  .card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+
+  .card-badge { position: absolute; top: 12px; left: 12px; padding: 6px 14px; }
+  .card-roomtype {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: var(--color-pristine-surface);
+    color: var(--color-ink-black);
+    font-size: var(--text-caption);
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+  }
+
+  .card-body { padding: var(--card-padding); display: flex; flex-direction: column; gap: var(--spacing-8); }
+  .card-title { font-size: var(--text-subheading); font-weight: 700; letter-spacing: -0.05em; line-height: 1.25; }
+  .card-facts { font-size: var(--text-caption); color: #4a4a44; }
+
+  .card-foot {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-12);
+    margin-top: var(--spacing-4);
+    font-size: var(--text-body);
+  }
+  .card-rating { display: inline-flex; align-items: center; gap: 5px; font-weight: 700; }
+  .card-reviews { color: #4a4a44; font-size: var(--text-caption); }
+</style>

@@ -1,0 +1,198 @@
+{
+  "name": "Peikar",
+  "tagline": "Superhost of spacious vacation homes in Kuantan, Malaysia",
+  "profilePhoto": "/images/host.jpeg",
+  "profileUrl": "https://www.airbnb.com/users/profile/1470607562540148264",
+  "location": "Kuantan, Malaysia",
+  "work": "EZ TIDOR SOLUTION",
+  "bornIn": "00s",
+  "languages": "Chinese, English, and Malay",
+  "identityVerified": true,
+  "verifiedSince": "July 2024",
+  "isSuperhost": true,
+  "whatsapp": {
+    "number": "60123456789",
+    "message": "Hi Peikar! I found your vacation homes in Kuantan and I'd love to check availability for my group. Could you help me with the details?"
+  },
+  "stats": {
+    "reviews": 192,
+    "rating": 4.82,
+    "yearsHosting": 2,
+    "totalListings": 13
+  },
+  "travels": [
+    {
+      "location": "Chuo-ku, Japan",
+      "date": "January 2026"
+    },
+    {
+      "location": "Fujikawaguchiko, Japan",
+      "date": "January 2026"
+    },
+    {
+      "location": "Kabupaten Badung, Indonesia",
+      "date": "April 2025"
+    }
+  ],
+  "listings": [
+    {
+      "id": "1202454849994971601",
+      "name": "Ktn 3storey 25pax 6bedr 8bathr June's luxury house",
+      "shortName": "3-Storey Luxury House · June's",
+      "roomType": "Entire place",
+      "rating": 5,
+      "reviewCount": 15,
+      "guests": 25,
+      "bedrooms": 6,
+      "bathrooms": 8,
+      "image": "/images/listings/1202454849994971601.jpeg",
+      "url": "https://www.airbnb.com/rooms/1202454849994971601"
+    },
+    {
+      "id": "1203381190173597069",
+      "name": "Ktn 3storey 15pax 4bedr 5bathr June's luxury house",
+      "shortName": "3-Storey Luxury House · June's",
+      "roomType": "Entire place",
+      "rating": 4.89,
+      "reviewCount": 18,
+      "guests": 15,
+      "bedrooms": 4,
+      "bathrooms": 5,
+      "image": "/images/listings/1203381190173597069.jpeg",
+      "url": "https://www.airbnb.com/rooms/1203381190173597069"
+    },
+    {
+      "id": "1284511641232495449",
+      "name": "3minbeach/town 16pax pool 4bedr CozyVacationhouse",
+      "shortName": "Cozy Vacation House · Pool",
+      "roomType": "Entire place",
+      "rating": 4.79,
+      "reviewCount": 67,
+      "guests": 16,
+      "bedrooms": 4,
+      "bathrooms": null,
+      "image": "/images/listings/1284511641232495449.jpeg",
+      "url": "https://www.airbnb.com/rooms/1284511641232495449"
+    },
+    {
+      "id": "1315728568028876109",
+      "name": "Vacation 17pax beach Sepat/Kpadang/A.air/TC KtnTwn",
+      "shortName": "Beach Vacation House · Sepat",
+      "roomType": "Entire place",
+      "rating": 4.7,
+      "reviewCount": 33,
+      "guests": 17,
+      "bedrooms": null,
+      "bathrooms": null,
+      "image": "/images/listings/1315728568028876109.jpeg",
+      "url": "https://www.airbnb.com/rooms/1315728568028876109"
+    },
+    {
+      "id": "1316644318333801082",
+      "name": "Nearbeach/T.c/30pax pool/luxuryhouse event/party",
+      "shortName": "Event & Party House · 30 pax Pool",
+      "roomType": "Entire place",
+      "rating": 4.8,
+      "reviewCount": 5,
+      "guests": 30,
+      "bedrooms": null,
+      "bathrooms": null,
+      "image": "/images/listings/1316644318333801082.jpeg",
+      "url": "https://www.airbnb.com/rooms/1316644318333801082"
+    },
+    {
+      "id": "1327336765454565106",
+      "name": "NewReno KTN Budget 12pax 4bedr3b",
+      "shortName": "Newly Renovated Budget · 12 pax",
+      "roomType": "Entire place",
+      "rating": 5,
+      "reviewCount": 4,
+      "guests": 12,
+      "bedrooms": 4,
+      "bathrooms": 3,
+      "image": "/images/listings/1327336765454565106.jpeg",
+      "url": "https://www.airbnb.com/rooms/1327336765454565106"
+    },
+    {
+      "id": "1446805221986783802",
+      "name": "TelukCpk/Bungalow/20pax/5br5bthr/pool/Air hockey",
+      "shortName": "Teluk Cempedak Bungalow · Pool",
+      "roomType": "Entire place",
+      "rating": 4.95,
+      "reviewCount": 20,
+      "guests": 20,
+      "bedrooms": 5,
+      "bathrooms": 5,
+      "image": "/images/listings/1446805221986783802.jpeg",
+      "url": "https://www.airbnb.com/rooms/1446805221986783802"
+    },
+    {
+      "id": "1446869038805495580",
+      "name": "TC/Ktntown/Cozy/bathtub/4Bedr4bathr/13pax",
+      "shortName": "Cozy Town House · Bathtub",
+      "roomType": "Entire place",
+      "rating": 4.33,
+      "reviewCount": 9,
+      "guests": 13,
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "image": "/images/listings/1446869038805495580.jpeg",
+      "url": "https://www.airbnb.com/rooms/1446869038805495580"
+    },
+    {
+      "id": "1461543700474356396",
+      "name": "Cosy Big House 4B4B for 16pax",
+      "shortName": "Cosy Big House · 4B4B",
+      "roomType": "Entire place",
+      "rating": 4.4,
+      "reviewCount": 10,
+      "guests": 16,
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "image": "/images/listings/1461543700474356396.jpeg",
+      "url": "https://www.airbnb.com/rooms/1461543700474356396"
+    }
+  ],
+  "reviews": [
+    {
+      "text": "Highly recommended. Spacious and neat for 14paxs",
+      "rating": 5,
+      "date": "August 2026",
+      "reviewer": "Hunlan",
+      "reviewerLoc": "Selangor, Malaysia",
+      "reviewerPhoto": "/images/reviewers/0.jpg"
+    },
+    {
+      "text": "The location is very strategic, with plenty of restaurants and a supermarket nearby, and it's only an 8-minute drive to Teluk Chempedak. Check-in was smooth and hassle-free, as the host was onsite to manage the housekeeping. The house is spacious and comfortably accommodated our family of 10 adults, with everyone having their own bed. We had a wonderful stay. I would definitely stay here again with my family.",
+      "rating": 5,
+      "date": "August 2026",
+      "reviewer": "Izzati",
+      "reviewerLoc": "Malaysia",
+      "reviewerPhoto": "/images/reviewers/1.jpg"
+    },
+    {
+      "text": "We had a wonderful stay at Peikar's place! He is an excellent host, very responsive and always replied to my messages almost immediately, making the entire experience smooth and worry-free. The house is spacious, exceptionally clean, and exactly as described. It is especially suitable for large groups like ours, with plenty of space for everyone to enjoy. I highly recommend Peikar's place to anyone looking for a comfortable, private, and well-equipped stay.",
+      "rating": 5,
+      "date": "July 2026",
+      "reviewer": "Nawari",
+      "reviewerLoc": "Malaysia",
+      "reviewerPhoto": "/images/reviewers/2.jpg"
+    },
+    {
+      "text": "Rumah cantik, tenang dan dekat je dengan pantai. Ada mini game, wifi, tv. Aircond semua sejuk, ada mesin basuh dan semua peralatan memasak. Terbaikkkkk, boleh datang, recommend!",
+      "rating": 5,
+      "date": "July 2026",
+      "reviewer": "Muhd",
+      "reviewerLoc": "Pasir Mas, Malaysia",
+      "reviewerPhoto": "/images/reviewers/3.jpg"
+    },
+    {
+      "text": "Excellent host with quick response. Very accommodative. House is spacious and clean.",
+      "rating": 5,
+      "date": "July 2026",
+      "reviewer": "Mohd Tarmizi",
+      "reviewerLoc": "Kota Bharu, Malaysia",
+      "reviewerPhoto": "/images/reviewers/4.jpg"
+    }
+  ]
+}

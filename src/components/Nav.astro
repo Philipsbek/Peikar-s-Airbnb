@@ -1,0 +1,167 @@
+---
+import host from '../data/host.json';
+
+const links = [
+  { href: '#stays', label: 'Stays' },
+  { href: '#reviews', label: 'Reviews' },
+  { href: '#about', label: 'About the host' },
+  { href: '#travel', label: 'Travels' },
+];
+---
+
+<header class="nav-wrap">
+  <nav class="nav container">
+    <a href="#top" class="nav-brand">Peikar<span>·</span>stays</a>
+
+    <div class="nav-links">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </div>
+
+    <a href={host.profileUrl} target="_blank" rel="noopener" class="btn btn--coral nav-cta">
+      View Airbnb profile
+    </a>
+
+    <button
+      class="nav-burger"
+      id="nav-burger"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="nav-mobile"
+    >
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile dropdown -->
+  <div class="nav-mobile container" id="nav-mobile" hidden>
+    <div class="nav-mobile-panel">
+      {links.map((l) => <a href={l.href} class="nav-mobile-link">{l.label}</a>)}
+      <a href={host.profileUrl} target="_blank" rel="noopener" class="btn btn--coral nav-mobile-cta">
+        View Airbnb profile
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: var(--spacing-16) 0 0;
+    background: linear-gradient(var(--color-warm-canvas) 70%, transparent);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-16);
+    background: var(--color-pristine-surface);
+    border: var(--hairline);
+    border-radius: var(--radius-cards);
+    height: 64px;
+    padding-inline: var(--spacing-24);
+    max-width: calc(var(--page-max-width) - 0px);
+  }
+  .nav-brand {
+    font-size: var(--text-subheading);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+  }
+  .nav-brand span { color: var(--color-coral-pulse); margin-inline: 2px; }
+  .nav-links {
+    display: flex;
+    gap: var(--spacing-24);
+    font-size: var(--text-body);
+    font-weight: 400;
+  }
+  .nav-links a { transition: color 0.15s ease; }
+  .nav-links a:hover { color: var(--color-coral-pulse); }
+  .nav-cta { padding: 10px 20px; font-size: var(--text-caption); }
+
+  /* Burger button — hidden on desktop */
+  .nav-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 0 10px;
+    background: transparent;
+    border: var(--hairline);
+    border-radius: var(--radius-full);
+  }
+  .nav-burger span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--color-ink-black);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .nav-burger[aria-expanded='true'] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+  .nav-burger[aria-expanded='true'] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile dropdown panel */
+  .nav-mobile { margin-top: var(--spacing-8); }
+  .nav-mobile[hidden] { display: none; }
+  .nav-mobile-panel {
+    background: var(--color-pristine-surface);
+    border: var(--hairline);
+    border-radius: var(--radius-cards);
+    padding: var(--spacing-12);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+  .nav-mobile-link {
+    padding: var(--spacing-12) var(--spacing-16);
+    border-radius: var(--radius-cards);
+    font-size: var(--text-subheading);
+    font-weight: 400;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .nav-mobile-link:hover { background: var(--color-sand-beige); color: var(--color-coral-pulse); }
+  .nav-mobile-cta {
+    margin-top: var(--spacing-8);
+    justify-content: center;
+    font-size: var(--text-body);
+  }
+
+  @media (max-width: 860px) {
+    .nav-links,
+    .nav-cta { display: none; }
+    .nav-burger { display: flex; }
+  }
+  @media (min-width: 861px) {
+    /* Never show the mobile panel on desktop, even if toggled then resized */
+    .nav-mobile { display: none !important; }
+  }
+</style>
+
+<script>
+  const burger = document.getElementById('nav-burger');
+  const menu = document.getElementById('nav-mobile');
+
+  function setOpen(open: boolean) {
+    if (!burger || !menu) return;
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (open) menu.removeAttribute('hidden');
+    else menu.setAttribute('hidden', '');
+  }
+
+  burger?.addEventListener('click', () => {
+    setOpen(burger.getAttribute('aria-expanded') !== 'true');
+  });
+
+  // Close after tapping a link
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+</script>
