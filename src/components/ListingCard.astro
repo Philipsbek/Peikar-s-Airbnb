@@ -1,4 +1,6 @@
 ---
+import host from '../data/host.json';
+
 interface Listing {
   id: string;
   name: string;
@@ -10,78 +12,119 @@ interface Listing {
   bedrooms: number | null;
   bathrooms: number | null;
   image: string;
+  images?: string[];
   url: string;
 }
-const { listing } = Astro.props as { listing: Listing };
 
+const { listing } = Astro.props as { listing: Listing };
+const images = listing.images?.length ? listing.images : [listing.image];
 const facts = [
   listing.guests ? `${listing.guests} guests` : null,
   listing.bedrooms ? `${listing.bedrooms} bedrooms` : null,
   listing.bathrooms ? `${listing.bathrooms} baths` : null,
 ].filter(Boolean);
-
 const isTopRated = listing.rating >= 4.9;
+const whatsappMessage = `Hi Peikar! I'm interested in booking ${listing.shortName} in Kuantan. Could you please share the availability and booking details?`;
+const whatsappHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComponent(whatsappMessage)}`;
 ---
 
-<a class="card" href={listing.url} target="_blank" rel="noopener">
+<article class="card" data-listing-card>
   <div class="card-media">
-    <img src={listing.image} alt={listing.shortName} loading="lazy" width="600" height="450" />
+    <div class="card-track" data-gallery-track tabindex="0" aria-label={`${listing.shortName} photo gallery`}>
+      {images.map((image, index) => (
+        <div class="card-slide">
+          <img src={image} alt={`${listing.shortName} — photo ${index + 1} of ${images.length}`} loading="lazy" width="600" height="450" />
+        </div>
+      ))}
+    </div>
     {isTopRated && <span class="badge card-badge">Guest favourite</span>}
     <span class="card-roomtype">{listing.roomType}</span>
+    {images.length > 1 && (
+      <>
+        <button class="gallery-arrow gallery-arrow--prev" type="button" data-gallery-prev aria-label="Previous photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg></button>
+        <button class="gallery-arrow gallery-arrow--next" type="button" data-gallery-next aria-label="Next photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg></button>
+        <div class="gallery-dots" aria-hidden="true">{images.map((_, index) => <span class:list={['gallery-dot', { 'is-active': index === 0 }]}></span>)}</div>
+        <span class="gallery-count" data-gallery-count>1 / {images.length}</span>
+      </>
+    )}
   </div>
   <div class="card-body">
-    <h3 class="card-title">{listing.shortName}</h3>
-    <p class="card-facts">{facts.join('  ·  ')}</p>
-    <div class="card-foot">
-      <span class="card-rating">
-        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="#ff5a5f" d="M8 12.2 3.6 15l1.2-5-3.9-3.4 5.1-.4L8 1.5l2 4.7 5.1.4-3.9 3.4 1.2 5z"/></svg>
-        {listing.rating.toFixed(2)}
-      </span>
-      <span class="card-reviews">{listing.reviewCount} reviews</span>
+    <div>
+      <h3 class="card-title">{listing.shortName}</h3>
+      <p class="card-facts">{facts.join(' · ')}</p>
     </div>
+    <div class="card-foot">
+      <span class="card-rating"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="#ff5a5f" d="M8 12.2 3.6 15l1.2-5-3.9-3.4 5.1-.4L8 1.5l2 4.7 5.1.4-3.9 3.4 1.2 5z"/></svg>{listing.rating.toFixed(2)}</span>
+      <span class="card-reviews">{listing.reviewCount} reviews</span>
+      <a class="card-airbnb-link" href={listing.url} target="_blank" rel="noopener">Airbnb</a>
+    </div>
+    <a class="card-book" href={whatsappHref} target="_blank" rel="noopener" aria-label={`Ask Peikar about booking ${listing.shortName} on WhatsApp`}>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.003 3C9.38 3 3.998 8.38 3.998 15c0 2.096.55 4.142 1.594 5.945L3 29l8.28-2.54A12.9 12.9 0 0 0 16 27c6.623 0 12.005-5.38 12.005-12S22.626 3 16.003 3zm0 21.8c-1.86 0-3.68-.5-5.27-1.44l-.38-.22-4.9 1.5 1.5-4.78-.25-.4A9.78 9.78 0 0 1 6.2 15c0-5.4 4.4-9.8 9.8-9.8 5.4 0 9.8 4.4 9.8 9.8 0 5.4-4.4 9.8-9.8 9.8zm5.37-7.34c-.29-.15-1.72-.85-1.98-.95-.27-.1-.46-.15-.66.15-.2.29-.76.95-.93 1.14-.17.2-.34.22-.63.07-.29-.15-1.23-.45-2.34-1.44-.86-.77-1.44-1.72-1.61-2-.17-.29-.02-.44.13-.59.13-.13.29-.34.44-.5.15-.17.2-.29.29-.48.1-.2.05-.36-.02-.5-.07-.15-.66-1.6-.9-2.19-.24-.57-.48-.5-.66-.5-.17 0-.36-.02-.56-.02s-.5.07-.77.36c-.27.29-1.02 1-1.02 2.44 0 1.44 1.05 2.83 1.19 3.03.15.2 2.05 3.14 4.97 4.4.69.3 1.24.48 1.66.61.7.22 1.33.19 1.83.12.56-.08 1.72-.7 1.96-1.38.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.56-.34z"/></svg>
+      Ask about this stay
+    </a>
   </div>
-</a>
+</article>
+
+<script>
+  const setupListingGalleries = () => {
+    document.querySelectorAll<HTMLElement>('[data-listing-card]').forEach((card) => {
+      if (card.dataset.galleryReady) return;
+      card.dataset.galleryReady = 'true';
+      const track = card.querySelector<HTMLElement>('[data-gallery-track]');
+      const slides = Array.from(card.querySelectorAll<HTMLElement>('.card-slide'));
+      const dots = Array.from(card.querySelectorAll<HTMLElement>('.gallery-dot'));
+      const count = card.querySelector<HTMLElement>('[data-gallery-count]');
+      if (!track || slides.length < 2) return;
+      const current = () => Math.max(0, Math.min(slides.length - 1, Math.round(track.scrollLeft / track.clientWidth)));
+      const goTo = (index: number) => track.scrollTo({ left: ((index + slides.length) % slides.length) * track.clientWidth, behavior: 'smooth' });
+      const update = () => {
+        const index = current();
+        dots.forEach((dot, dotIndex) => dot.classList.toggle('is-active', dotIndex === index));
+        if (count) count.textContent = `${index + 1} / ${slides.length}`;
+      };
+      card.querySelector('[data-gallery-prev]')?.addEventListener('click', () => goTo(current() - 1));
+      card.querySelector('[data-gallery-next]')?.addEventListener('click', () => goTo(current() + 1));
+      track.addEventListener('scroll', update, { passive: true });
+      track.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') goTo(current() - 1);
+        if (event.key === 'ArrowRight') goTo(current() + 1);
+      });
+    });
+  };
+  setupListingGalleries();
+  document.addEventListener('astro:page-load', setupListingGalleries);
+</script>
 
 <style>
-  .card {
-    display: flex;
-    flex-direction: column;
-    background: var(--color-pristine-surface);
-    border: var(--hairline);
-    border-radius: var(--radius-cards);
-    overflow: hidden;
-    transition: transform 0.2s ease;
-  }
-  .card:hover { transform: translateY(-4px); }
-  .card:hover .card-media img { transform: scale(1.04); }
-
-  .card-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
-  .card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-
-  .card-badge { position: absolute; top: 12px; left: 12px; padding: 6px 14px; }
-  .card-roomtype {
-    position: absolute;
-    bottom: 12px;
-    left: 12px;
-    background: var(--color-pristine-surface);
-    color: var(--color-ink-black);
-    font-size: var(--text-caption);
-    font-weight: 500;
-    padding: 6px 14px;
-    border-radius: var(--radius-full);
-  }
-
-  .card-body { padding: var(--card-padding); display: flex; flex-direction: column; gap: var(--spacing-8); }
-  .card-title { font-size: var(--text-subheading); font-weight: 700; letter-spacing: 0; line-height: 1.25; }
-  .card-facts { font-size: var(--text-caption); color: #4a4a44; }
-
-  .card-foot {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-12);
-    margin-top: var(--spacing-4);
-    font-size: var(--text-body);
-  }
-  .card-rating { display: inline-flex; align-items: center; gap: 5px; font-weight: 700; }
-  .card-reviews { color: #4a4a44; font-size: var(--text-caption); }
+  .card { display:flex; flex-direction:column; background:var(--color-pristine-surface); border:var(--hairline); border-radius:var(--radius-cards); overflow:hidden; transition:transform .2s ease; }
+  .card:hover { transform:translateY(-4px); }
+  .card-media { position:relative; aspect-ratio:4/3; overflow:hidden; background:var(--color-sand-beige); }
+  .card-track { width:100%; height:100%; display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; overscroll-behavior-x:contain; touch-action:pan-x pan-y; }
+  .card-track::-webkit-scrollbar { display:none; }
+  .card-track:focus-visible { outline:2px solid var(--color-coral-pulse); outline-offset:-3px; }
+  .card-slide { flex:0 0 100%; width:100%; height:100%; scroll-snap-align:start; scroll-snap-stop:always; }
+  .card-slide img { width:100%; height:100%; object-fit:cover; user-select:none; -webkit-user-drag:none; }
+  .card-badge { position:absolute; top:12px; left:12px; padding:6px 14px; pointer-events:none; }
+  .card-roomtype { position:absolute; bottom:12px; left:12px; background:#fff; color:#000; font-size:var(--text-caption); font-weight:500; padding:6px 14px; border-radius:var(--radius-full); pointer-events:none; }
+  .gallery-arrow { position:absolute; top:50%; translate:0 -50%; width:36px; height:36px; border:0; border-radius:999px; background:rgba(255,255,255,.9); color:#000; display:grid; place-items:center; cursor:pointer; opacity:0; transition:opacity .18s ease,transform .18s ease,background .18s ease; }
+  .gallery-arrow:hover { background:#fff; transform:scale(1.06); }
+  .gallery-arrow svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .gallery-arrow--prev { left:12px; } .gallery-arrow--next { right:12px; }
+  .card-media:hover .gallery-arrow,.gallery-arrow:focus-visible { opacity:1; }
+  .gallery-dots { position:absolute; bottom:17px; left:50%; translate:-50% 0; display:flex; gap:5px; pointer-events:none; }
+  .gallery-dot { width:5px; height:5px; border-radius:999px; background:rgba(255,255,255,.65); transition:width .2s ease,background .2s ease; }
+  .gallery-dot.is-active { width:14px; background:#fff; }
+  .gallery-count { position:absolute; top:12px; right:12px; padding:5px 10px; border-radius:999px; background:rgba(0,0,0,.58); color:#fff; font-size:12px; line-height:1; pointer-events:none; }
+  .card-body { padding:var(--card-padding); display:flex; flex:1; flex-direction:column; gap:var(--spacing-16); }
+  .card-title { font-size:var(--text-subheading); font-weight:700; letter-spacing:0; line-height:1.25; }
+  .card-facts { margin-top:var(--spacing-8); font-size:var(--text-caption); color:#4a4a44; }
+  .card-foot { display:flex; align-items:center; flex-wrap:wrap; gap:var(--spacing-12); font-size:var(--text-body); }
+  .card-rating { display:inline-flex; align-items:center; gap:5px; font-weight:700; }
+  .card-reviews,.card-airbnb-link { color:#4a4a44; font-size:var(--text-caption); }
+  .card-airbnb-link { margin-left:auto; text-decoration:underline; text-underline-offset:3px; }
+  .card-book { margin-top:auto; display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:10px 18px; border-radius:999px; background:var(--color-coral-pulse); color:#fff; font-size:var(--text-caption); font-weight:700; transition:background .18s ease,transform .18s ease; }
+  .card-book:hover { background:#000; transform:translateY(-2px); }
+  .card-book svg { width:19px; height:19px; flex:0 0 auto; }
+  @media (hover:none) { .gallery-arrow { display:none; } }
+  @media (prefers-reduced-motion:reduce) { .card,.gallery-arrow,.gallery-dot,.card-book { transition:none; } .card:hover,.card-book:hover { transform:none; } }
 </style>
