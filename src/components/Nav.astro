@@ -4,21 +4,22 @@ import host from '../data/host.json';
 const links = [
   { href: '#stays', label: 'Stays' },
   { href: '#reviews', label: 'Reviews' },
-  { href: '#about', label: 'About the host' },
-  { href: '#travel', label: 'Travels' },
+  { href: '#about', label: 'About' },
 ];
+
+const waHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComponent(host.whatsapp.message)}`;
 ---
 
 <header class="nav-wrap">
   <nav class="nav container">
-    <a href="#top" class="nav-brand">Peikar<span>·</span>stays</a>
+    <a href="#top" class="nav-brand"><img src="/images/logo.png" alt="Eztidor Solution — Homestay Services" /></a>
 
     <div class="nav-links">
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
     </div>
 
-    <a href={host.profileUrl} target="_blank" rel="noopener" class="btn btn--coral nav-cta">
-      View Airbnb profile
+    <a href={waHref} target="_blank" rel="noopener" class="btn btn--coral nav-cta">
+      Chat with us
     </a>
 
     <button
@@ -36,8 +37,8 @@ const links = [
   <div class="nav-mobile container" id="nav-mobile" hidden>
     <div class="nav-mobile-panel">
       {links.map((l) => <a href={l.href} class="nav-mobile-link">{l.label}</a>)}
-      <a href={host.profileUrl} target="_blank" rel="noopener" class="btn btn--coral nav-mobile-cta">
-        View Airbnb profile
+      <a href={waHref} target="_blank" rel="noopener" class="btn btn--coral nav-mobile-cta">
+        Chat with us
       </a>
     </div>
   </div>
@@ -49,26 +50,27 @@ const links = [
     top: 0;
     z-index: 50;
     padding: var(--spacing-16) 0 0;
-    background: linear-gradient(var(--color-warm-canvas) 70%, transparent);
+    background: transparent;
   }
   .nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--spacing-16);
-    background: var(--color-pristine-surface);
-    border: var(--hairline);
+    /* Frosted glass */
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-shadow: 0 6px 24px rgba(42, 35, 24, 0.06);
     border-radius: var(--radius-cards);
     height: 64px;
     padding-inline: var(--spacing-24);
     max-width: calc(var(--page-max-width) - 0px);
   }
-  .nav-brand {
-    font-size: var(--text-subheading);
-    font-weight: 700;
-    letter-spacing: 0;
-  }
-  .nav-brand span { color: var(--color-coral-pulse); margin-inline: 2px; }
+  .nav-brand { display: inline-flex; align-items: center; }
+  .nav-brand img { height: 42px; width: auto; display: block; }
+  @media (max-width: 560px) { .nav-brand img { height: 36px; } }
   .nav-links {
     display: flex;
     gap: var(--spacing-24);

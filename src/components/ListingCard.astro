@@ -13,18 +13,21 @@ interface Listing {
   bathrooms: number | null;
   image: string;
   images?: string[];
+  address?: string;
   url: string;
 }
 
 const { listing } = Astro.props as { listing: Listing };
 const images = listing.images?.length ? listing.images : [listing.image];
+const address = listing.address ?? 'Kuantan, Pahang, Malaysia';
+const detailHref = `/stays/${listing.id}`;
 const facts = [
   listing.guests ? `${listing.guests} guests` : null,
   listing.bedrooms ? `${listing.bedrooms} bedrooms` : null,
   listing.bathrooms ? `${listing.bathrooms} baths` : null,
 ].filter(Boolean);
 const isTopRated = listing.rating >= 4.9;
-const whatsappMessage = `Hi Peikar! I'm interested in booking ${listing.shortName} in Kuantan. Could you please share the availability and booking details?`;
+const whatsappMessage = `Hi Eztidor Solution! I'm interested in booking ${listing.shortName} in Kuantan. Could you please share the availability and booking details?`;
 const whatsappHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComponent(whatsappMessage)}`;
 ---
 
@@ -39,7 +42,7 @@ const whatsappHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComp
     </div>
     {isTopRated && <span class="badge card-badge">Guest favourite</span>}
     <span class="card-roomtype">{listing.roomType}</span>
-    <button class="gallery-view" type="button" data-lightbox-open aria-label={`View all photos of ${listing.shortName}`}>
+    <button class="gallery-view" type="button" data-lightbox-open aria-label={`View photos of ${listing.shortName}`}>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l1.4-2h7.2L17 7h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
       <span>View photos</span>
     </button>
@@ -54,98 +57,28 @@ const whatsappHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComp
   </div>
   <div class="card-body">
     <div>
-      <h3 class="card-title">{listing.shortName}</h3>
+      <h3 class="card-title"><a href={detailHref}>{listing.shortName}</a></h3>
       <p class="card-facts">{facts.join(' · ')}</p>
+      <p class="card-address">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        {address}
+      </p>
     </div>
     <div class="card-foot">
-      <span class="card-rating"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="#ff5a5f" d="M8 12.2 3.6 15l1.2-5-3.9-3.4 5.1-.4L8 1.5l2 4.7 5.1.4-3.9 3.4 1.2 5z"/></svg>{listing.rating.toFixed(2)}</span>
+      <span class="card-rating"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="#6f9350" d="M8 12.2 3.6 15l1.2-5-3.9-3.4 5.1-.4L8 1.5l2 4.7 5.1.4-3.9 3.4 1.2 5z"/></svg>{listing.rating.toFixed(2)}</span>
       <span class="card-reviews">{listing.reviewCount} reviews</span>
-      <a class="card-airbnb-link" href={listing.url} target="_blank" rel="noopener">Airbnb</a>
     </div>
-    <a class="card-book" href={whatsappHref} target="_blank" rel="noopener" aria-label={`Ask Peikar about booking ${listing.shortName} on WhatsApp`}>
-      <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.003 3C9.38 3 3.998 8.38 3.998 15c0 2.096.55 4.142 1.594 5.945L3 29l8.28-2.54A12.9 12.9 0 0 0 16 27c6.623 0 12.005-5.38 12.005-12S22.626 3 16.003 3zm0 21.8c-1.86 0-3.68-.5-5.27-1.44l-.38-.22-4.9 1.5 1.5-4.78-.25-.4A9.78 9.78 0 0 1 6.2 15c0-5.4 4.4-9.8 9.8-9.8 5.4 0 9.8 4.4 9.8 9.8 0 5.4-4.4 9.8-9.8 9.8zm5.37-7.34c-.29-.15-1.72-.85-1.98-.95-.27-.1-.46-.15-.66.15-.2.29-.76.95-.93 1.14-.17.2-.34.22-.63.07-.29-.15-1.23-.45-2.34-1.44-.86-.77-1.44-1.72-1.61-2-.17-.29-.02-.44.13-.59.13-.13.29-.34.44-.5.15-.17.2-.29.29-.48.1-.2.05-.36-.02-.5-.07-.15-.66-1.6-.9-2.19-.24-.57-.48-.5-.66-.5-.17 0-.36-.02-.56-.02s-.5.07-.77.36c-.27.29-1.02 1-1.02 2.44 0 1.44 1.05 2.83 1.19 3.03.15.2 2.05 3.14 4.97 4.4.69.3 1.24.48 1.66.61.7.22 1.33.19 1.83.12.56-.08 1.72-.7 1.96-1.38.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.56-.34z"/></svg>
-      Ask about this stay
-    </a>
+    <div class="card-actions">
+      <a class="card-details" href={detailHref}>View details</a>
+      <a class="card-book" href={whatsappHref} target="_blank" rel="noopener" aria-label={`Ask Eztidor Solution about booking ${listing.shortName} on WhatsApp`}>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.003 3C9.38 3 3.998 8.38 3.998 15c0 2.096.55 4.142 1.594 5.945L3 29l8.28-2.54A12.9 12.9 0 0 0 16 27c6.623 0 12.005-5.38 12.005-12S22.626 3 16.003 3zm0 21.8c-1.86 0-3.68-.5-5.27-1.44l-.38-.22-4.9 1.5 1.5-4.78-.25-.4A9.78 9.78 0 0 1 6.2 15c0-5.4 4.4-9.8 9.8-9.8 5.4 0 9.8 4.4 9.8 9.8 0 5.4-4.4 9.8-9.8 9.8zm5.37-7.34c-.29-.15-1.72-.85-1.98-.95-.27-.1-.46-.15-.66.15-.2.29-.76.95-.93 1.14-.17.2-.34.22-.63.07-.29-.15-1.23-.45-2.34-1.44-.86-.77-1.44-1.72-1.61-2-.17-.29-.02-.44.13-.59.13-.13.29-.34.44-.5.15-.17.2-.29.29-.48.1-.2.05-.36-.02-.5-.07-.15-.66-1.6-.9-2.19-.24-.57-.48-.5-.66-.5-.17 0-.36-.02-.56-.02s-.5.07-.77.36c-.27.29-1.02 1-1.02 2.44 0 1.44 1.05 2.83 1.19 3.03.15.2 2.05 3.14 4.97 4.4.69.3 1.24.48 1.66.61.7.22 1.33.19 1.83.12.56-.08 1.72-.7 1.96-1.38.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.56-.34z"/></svg>
+        Ask on WhatsApp
+      </a>
+    </div>
   </div>
 </article>
 
 <script>
-  type LightboxDialog = HTMLDialogElement & {
-    openGallery?: (images: string[], title: string, index: number) => void;
-  };
-
-  const ensureLightbox = () => {
-    const existing = document.querySelector<LightboxDialog>('#gallery-lightbox');
-    if (existing) return existing;
-
-    const dialog = document.createElement('dialog') as LightboxDialog;
-    dialog.id = 'gallery-lightbox';
-    dialog.className = 'gallery-lightbox';
-    dialog.setAttribute('aria-label', 'Property photo viewer');
-    dialog.innerHTML = `
-      <div class="lightbox-shell">
-        <header class="lightbox-topbar">
-          <p class="lightbox-title"></p>
-          <span class="lightbox-count" aria-live="polite"></span>
-          <button class="lightbox-close" type="button" aria-label="Close photo viewer">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
-          </button>
-        </header>
-        <div class="lightbox-stage">
-          <button class="lightbox-arrow lightbox-arrow--prev" type="button" aria-label="Previous photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
-          <img class="lightbox-image" alt="" />
-          <button class="lightbox-arrow lightbox-arrow--next" type="button" aria-label="Next photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
-        </div>
-        <p class="lightbox-hint">Swipe or use arrow keys to browse</p>
-      </div>`;
-    document.body.append(dialog);
-
-    const image = dialog.querySelector<HTMLImageElement>('.lightbox-image')!;
-    const title = dialog.querySelector<HTMLElement>('.lightbox-title')!;
-    const count = dialog.querySelector<HTMLElement>('.lightbox-count')!;
-    let galleryImages: string[] = [];
-    let galleryTitle = '';
-    let activeIndex = 0;
-    let pointerStart = 0;
-
-    const render = () => {
-      image.classList.remove('is-ready');
-      image.src = galleryImages[activeIndex];
-      image.alt = `${galleryTitle} — photo ${activeIndex + 1} of ${galleryImages.length}`;
-      title.textContent = galleryTitle;
-      count.textContent = `${activeIndex + 1} / ${galleryImages.length}`;
-    };
-    const move = (step: number) => {
-      activeIndex = (activeIndex + step + galleryImages.length) % galleryImages.length;
-      render();
-    };
-
-    image.addEventListener('load', () => image.classList.add('is-ready'));
-    dialog.querySelector('.lightbox-close')?.addEventListener('click', () => dialog.close());
-    dialog.querySelector('.lightbox-arrow--prev')?.addEventListener('click', () => move(-1));
-    dialog.querySelector('.lightbox-arrow--next')?.addEventListener('click', () => move(1));
-    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
-    dialog.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowLeft') { event.preventDefault(); move(-1); }
-      if (event.key === 'ArrowRight') { event.preventDefault(); move(1); }
-    });
-    image.addEventListener('pointerdown', (event) => { pointerStart = event.clientX; });
-    image.addEventListener('pointerup', (event) => {
-      const distance = event.clientX - pointerStart;
-      if (Math.abs(distance) > 50) move(distance > 0 ? -1 : 1);
-    });
-    dialog.addEventListener('close', () => { document.documentElement.style.overflow = ''; });
-    dialog.openGallery = (images, name, index) => {
-      galleryImages = images;
-      galleryTitle = name;
-      activeIndex = Math.max(0, Math.min(images.length - 1, index));
-      render();
-      document.documentElement.style.overflow = 'hidden';
-      dialog.showModal();
-    };
-    return dialog;
-  };
-
   const setupListingGalleries = () => {
     document.querySelectorAll<HTMLElement>('[data-listing-card]').forEach((card) => {
       if (card.dataset.galleryReady) return;
@@ -154,25 +87,33 @@ const whatsappHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComp
       const slides = Array.from(card.querySelectorAll<HTMLElement>('.card-slide'));
       const dots = Array.from(card.querySelectorAll<HTMLElement>('.gallery-dot'));
       const count = card.querySelector<HTMLElement>('[data-gallery-count]');
-      if (!track || slides.length < 2) return;
-      const current = () => Math.max(0, Math.min(slides.length - 1, Math.round(track.scrollLeft / track.clientWidth)));
-      const goTo = (index: number) => track.scrollTo({ left: ((index + slides.length) % slides.length) * track.clientWidth, behavior: 'smooth' });
-      const update = () => {
-        const index = current();
-        dots.forEach((dot, dotIndex) => dot.classList.toggle('is-active', dotIndex === index));
-        if (count) count.textContent = `${index + 1} / ${slides.length}`;
-      };
-      card.querySelector('[data-gallery-prev]')?.addEventListener('click', () => goTo(current() - 1));
-      card.querySelector('[data-gallery-next]')?.addEventListener('click', () => goTo(current() + 1));
+      const currentIndex = () =>
+        track ? Math.max(0, Math.min(slides.length - 1, Math.round(track.scrollLeft / track.clientWidth))) : 0;
+
+      // Inline carousel (only when there are multiple photos)
+      if (track && slides.length > 1) {
+        const goTo = (index: number) => track.scrollTo({ left: ((index + slides.length) % slides.length) * track.clientWidth, behavior: 'smooth' });
+        const update = () => {
+          const index = currentIndex();
+          dots.forEach((dot, dotIndex) => dot.classList.toggle('is-active', dotIndex === index));
+          if (count) count.textContent = `${index + 1} / ${slides.length}`;
+        };
+        card.querySelector('[data-gallery-prev]')?.addEventListener('click', () => goTo(currentIndex() - 1));
+        card.querySelector('[data-gallery-next]')?.addEventListener('click', () => goTo(currentIndex() + 1));
+        track.addEventListener('scroll', update, { passive: true });
+        track.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowLeft') goTo(currentIndex() - 1);
+          if (event.key === 'ArrowRight') goTo(currentIndex() + 1);
+        });
+      }
+
+      // "View photos" → single-image lightbox, starting on the visible photo
       card.querySelector('[data-lightbox-open]')?.addEventListener('click', () => {
-        const imageSources = slides.map((slide) => slide.querySelector<HTMLImageElement>('img')?.src).filter((source): source is string => Boolean(source));
+        const sources = slides
+          .map((slide) => slide.querySelector<HTMLImageElement>('img')?.src)
+          .filter((src): src is string => Boolean(src));
         const title = card.querySelector<HTMLElement>('.card-title')?.textContent?.trim() || 'Property photos';
-        ensureLightbox().openGallery?.(imageSources, title, current());
-      });
-      track.addEventListener('scroll', update, { passive: true });
-      track.addEventListener('keydown', (event) => {
-        if (event.key === 'ArrowLeft') goTo(current() - 1);
-        if (event.key === 'ArrowRight') goTo(current() + 1);
+        (window as any).openPhotoLightbox?.(sources, title, currentIndex());
       });
     });
   };
@@ -203,46 +144,30 @@ const whatsappHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComp
   .gallery-view { position:absolute; right:12px; bottom:12px; display:inline-flex; align-items:center; gap:6px; min-height:32px; padding:7px 12px; border:0; border-radius:999px; background:rgba(255,255,255,.92); color:#000; font:inherit; font-size:12px; font-weight:700; cursor:pointer; transition:background .18s ease,transform .18s ease; }
   .gallery-view:hover { background:#fff; transform:translateY(-2px); }
   .gallery-view svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+
   .card-body { padding:var(--card-padding); display:flex; flex:1; flex-direction:column; gap:var(--spacing-16); }
-  .card-title { font-size:var(--text-subheading); font-weight:700; letter-spacing:0; line-height:1.25; }
+  .card-title { font-size:var(--text-subheading); font-weight:700; line-height:1.25; }
+  .card-title a:hover { color:var(--color-coral-pulse); }
   .card-facts { margin-top:var(--spacing-8); font-size:var(--text-caption); color:#4a4a44; }
+  .card-address { margin-top:var(--spacing-8); display:flex; align-items:flex-start; gap:6px; font-size:var(--text-caption); color:#4a4a44; }
+  .card-address svg { width:14px; height:14px; margin-top:2px; flex:0 0 auto; fill:none; stroke:var(--color-coral-pulse); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
   .card-foot { display:flex; align-items:center; flex-wrap:wrap; gap:var(--spacing-12); font-size:var(--text-body); }
   .card-rating { display:inline-flex; align-items:center; gap:5px; font-weight:700; }
-  .card-reviews,.card-airbnb-link { color:#4a4a44; font-size:var(--text-caption); }
-  .card-airbnb-link { margin-left:auto; text-decoration:underline; text-underline-offset:3px; }
-  .card-book { margin-top:auto; display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:10px 18px; border-radius:999px; background:var(--color-coral-pulse); color:#fff; font-size:var(--text-caption); font-weight:700; transition:background .18s ease,transform .18s ease; }
-  .card-book:hover { background:#000; transform:translateY(-2px); }
+  .card-reviews { color:#4a4a44; font-size:var(--text-caption); }
+  .card-actions { margin-top:auto; display:flex; flex-direction:column; gap:8px; }
+  .card-details { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:10px 18px; border:1px solid var(--color-ink-black); border-radius:999px; background:transparent; color:var(--color-ink-black); font-size:var(--text-caption); font-weight:700; transition:background .18s ease,color .18s ease,transform .18s ease; }
+  .card-details:hover { background:var(--color-ink-black); color:#fff; transform:translateY(-2px); }
+  .card-book { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:10px 18px; border:1px solid var(--color-coral-pulse); border-radius:999px; background:var(--color-coral-pulse); color:#fff; font-size:var(--text-caption); font-weight:700; transition:background .18s ease,transform .18s ease,border-color .18s ease; }
+  .card-book:hover { background:#000; border-color:#000; transform:translateY(-2px); }
   .card-book svg { width:19px; height:19px; flex:0 0 auto; }
-
-  :global(.gallery-lightbox) { width:100vw; max-width:none; height:100dvh; max-height:none; margin:0; padding:0; border:0; background:transparent; color:#fff; overflow:hidden; }
-  :global(.gallery-lightbox::backdrop) { background:rgba(12,11,10,.94); backdrop-filter:blur(10px); }
-  :global(.lightbox-shell) { position:relative; width:100%; height:100%; display:grid; grid-template-rows:auto minmax(0,1fr) auto; padding:20px 24px 16px; background:rgba(12,11,10,.96); }
-  :global(.lightbox-topbar) { display:grid; grid-template-columns:minmax(0,1fr) auto 44px; align-items:center; gap:16px; min-height:52px; }
-  :global(.lightbox-title) { overflow:hidden; color:#fff; font-size:16px; font-weight:700; text-overflow:ellipsis; white-space:nowrap; }
-  :global(.lightbox-count) { padding:7px 12px; border:1px solid rgba(255,255,255,.28); border-radius:999px; color:#fff; font-size:13px; font-weight:700; }
-  :global(.lightbox-close),:global(.lightbox-arrow) { display:grid; place-items:center; border:0; border-radius:999px; background:#fff; color:#000; cursor:pointer; transition:background .18s ease,transform .18s ease; }
-  :global(.lightbox-close) { width:44px; height:44px; }
-  :global(.lightbox-close:hover),:global(.lightbox-arrow:hover) { background:var(--color-coral-pulse); color:#fff; transform:scale(1.05); }
-  :global(.lightbox-close svg),:global(.lightbox-arrow svg) { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-  :global(.lightbox-stage) { position:relative; min-height:0; display:grid; grid-template-columns:52px minmax(0,1fr) 52px; align-items:center; gap:20px; }
-  :global(.lightbox-image) { width:100%; height:100%; max-height:calc(100dvh - 132px); object-fit:contain; opacity:0; user-select:none; touch-action:pan-y; transition:opacity .24s ease; }
-  :global(.lightbox-image.is-ready) { opacity:1; }
-  :global(.lightbox-arrow) { width:52px; height:52px; }
-  :global(.lightbox-hint) { margin:8px 0 0; color:rgba(255,255,255,.62); font-size:12px; text-align:center; }
 
   @media (max-width:700px) {
     .gallery-view span { display:none; }
     .gallery-view { width:34px; padding:0; justify-content:center; }
-    :global(.lightbox-shell) { padding:12px 12px 10px; }
-    :global(.lightbox-topbar) { grid-template-columns:minmax(0,1fr) auto 40px; gap:8px; }
-    :global(.lightbox-title) { font-size:14px; }
-    :global(.lightbox-close) { width:40px; height:40px; }
-    :global(.lightbox-stage) { display:block; }
-    :global(.lightbox-image) { height:100%; max-height:calc(100dvh - 112px); }
-    :global(.lightbox-arrow) { position:absolute; top:50%; z-index:2; width:42px; height:42px; translate:0 -50%; }
-    :global(.lightbox-arrow--prev) { left:4px; }
-    :global(.lightbox-arrow--next) { right:4px; }
   }
   @media (hover:none) { .gallery-arrow { display:none; } }
-  @media (prefers-reduced-motion:reduce) { .card,.gallery-arrow,.gallery-dot,.gallery-view,.card-book,:global(.lightbox-image),:global(.lightbox-close),:global(.lightbox-arrow) { transition:none; } .card:hover,.gallery-view:hover,.card-book:hover,:global(.lightbox-close:hover),:global(.lightbox-arrow:hover) { transform:none; } }
+  @media (prefers-reduced-motion:reduce) {
+    .card,.gallery-arrow,.gallery-dot,.gallery-view,.card-details,.card-book { transition:none; }
+    .card:hover,.gallery-view:hover,.card-details:hover,.card-book:hover { transform:none; }
+  }
 </style>

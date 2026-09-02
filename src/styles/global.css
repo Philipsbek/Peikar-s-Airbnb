@@ -4,19 +4,21 @@
    ========================================================================== */
 
 :root {
-  /* Colors */
-  --color-warm-canvas: #ffffff;
+  /* Colors — earthy homestay palette drawn from the Eztidor Solution logo */
+  --color-warm-canvas: #f5efe3;   /* warm cream ground */
   --color-pristine-surface: #ffffff;
-  --color-sand-beige: #f5f2eb;
-  --color-ink-black: #000000;
-  --color-coral-pulse: #ff5a5f;
+  --color-sand-beige: #ece5d4;    /* soft sand accent bands */
+  --color-ink-black: #2a2318;     /* warm espresso near-black */
+  --color-coral-pulse: #6f9350;   /* soft sage green — primary accent (name kept for reuse) */
+  --color-clay: #a35a2a;          /* terracotta — secondary accent */
 
-  /* Hairline used to define white surfaces against the white canvas */
-  --hairline: 1px solid rgba(0, 0, 0, 0.1);
+  /* Hairline used to define surfaces */
+  --hairline: 1px solid rgba(42, 35, 24, 0.14);
 
-  /* Fonts — Supreme LL TT substitute stack */
-  --font-supreme: 'General Sans', 'DM Sans', Inter, ui-sans-serif, system-ui,
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Fonts — serif display (echoes the logo wordmark) + humanist sans body */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-supreme: 'DM Sans', ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   /* Type scale */
   --text-caption: 13px;
@@ -73,6 +75,9 @@ body {
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; letter-spacing: 0; cursor: pointer; }
+
+/* Serif display for all headings — echoes the logo wordmark */
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; }
 
 /* Shared layout helpers --------------------------------------------------- */
 .container {
@@ -138,4 +143,20 @@ button { font-family: inherit; letter-spacing: 0; cursor: pointer; }
   color: #fff;
   font-size: var(--text-caption);
   font-weight: 700;
+}
+
+/* Frosted glass on white surfaces across the site ------------------------- */
+.card,
+.review,
+.offer,
+.about-card,
+.pd-book-card,
+.pd-showall,
+.nav-mobile-panel,
+.hero-proof,
+.card-roomtype,
+.gallery-view {
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
 }

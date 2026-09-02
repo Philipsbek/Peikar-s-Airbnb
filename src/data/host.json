@@ -12,7 +12,7 @@
   "isSuperhost": true,
   "whatsapp": {
     "number": "60126885654",
-    "message": "Hi Peikar! I found your vacation homes in Kuantan and I'd love to check availability for my group. Could you help me with the details?"
+    "message": "Hi Eztidor Solution! I found your homestays in Kuantan and I'd love to check availability. Could you help me with the details?"
   },
   "stats": {
     "reviews": 192,
@@ -114,7 +114,10 @@
         "/images/listings/1202454849994971601/65.jpeg",
         "/images/listings/1202454849994971601/66.jpeg"
       ],
-      "url": "https://www.airbnb.com/rooms/1202454849994971601"
+      "url": "https://www.airbnb.com/rooms/1202454849994971601",
+      "address": "Lorong IM 11/5, Indera Mahkota, 25200 Kuantan, Pahang, Malaysia",
+      "lat": 3.84864,
+      "lng": 103.28342
     },
     {
       "id": "1203381190173597069",
@@ -180,7 +183,10 @@
         "/images/listings/1203381190173597069/50.jpeg",
         "/images/listings/1203381190173597069/51.jpeg"
       ],
-      "url": "https://www.airbnb.com/rooms/1203381190173597069"
+      "url": "https://www.airbnb.com/rooms/1203381190173597069",
+      "address": "Lorong IM 11/13, Indera Mahkota, 25200 Kuantan, Pahang, Malaysia",
+      "lat": 3.8501,
+      "lng": 103.28262
     },
     {
       "id": "1284511641232495449",
@@ -236,7 +242,10 @@
         "/images/listings/1284511641232495449/40.jpeg",
         "/images/listings/1284511641232495449/41.jpeg"
       ],
-      "url": "https://www.airbnb.com/rooms/1284511641232495449"
+      "url": "https://www.airbnb.com/rooms/1284511641232495449",
+      "address": "Lorong Kubang Buaya 6, Kampung Kubang Buaya, 25250 Kuantan, Pahang, Malaysia",
+      "lat": 3.8186802071131347,
+      "lng": 103.34327843067334
     },
     {
       "id": "1315728568028876109",
@@ -278,7 +287,10 @@
         "/images/listings/1315728568028876109/26.jpeg",
         "/images/listings/1315728568028876109/27.jpeg"
       ],
-      "url": "https://www.airbnb.com/rooms/1315728568028876109"
+      "url": "https://www.airbnb.com/rooms/1315728568028876109",
+      "address": "Bandar Putra, 26060 Kuantan, Pahang, Malaysia",
+      "lat": 3.7682026885479587,
+      "lng": 103.31999601684777
     },
     {
       "id": "1316644318333801082",
@@ -319,7 +331,10 @@
         "/images/listings/1316644318333801082/25.jpeg",
         "/images/listings/1316644318333801082/26.jpeg"
       ],
-      "url": "https://www.airbnb.com/rooms/1316644318333801082"
+      "url": "https://www.airbnb.com/rooms/1316644318333801082",
+      "address": "Lorong Kubang Buaya 78, Kampung Kubang Buaya, 25250 Kuantan, Pahang, Malaysia",
+      "lat": 3.8283921060370028,
+      "lng": 103.34937755341782
     },
     {
       "id": "1327336765454565106",
@@ -349,7 +364,10 @@
         "/images/listings/1327336765454565106/14.jpeg",
         "/images/listings/1327336765454565106/15.jpeg"
       ],
-      "url": "https://www.airbnb.com/rooms/1327336765454565106"
+      "url": "https://www.airbnb.com/rooms/1327336765454565106",
+      "address": "Kampung Kubang Buaya, 25300 Kuantan, Pahang, Malaysia",
+      "lat": 3.83327,
+      "lng": 103.33804
     },
     {
       "id": "1446805221986783802",
@@ -390,7 +408,10 @@
         "/images/listings/1446805221986783802/25.jpeg",
         "/images/listings/1446805221986783802/26.jpeg"
       ],
-      "url": "https://www.airbnb.com/rooms/1446805221986783802"
+      "url": "https://www.airbnb.com/rooms/1446805221986783802",
+      "address": "Jalan Datuk Bahaman, Kampung Kubang Buaya, 25250 Kuantan, Pahang, Malaysia",
+      "lat": 3.823858272269209,
+      "lng": 103.34354201478338
     },
     {
       "id": "1446869038805495580",
@@ -424,7 +445,10 @@
         "/images/listings/1446869038805495580/18.jpeg",
         "/images/listings/1446869038805495580/19.jpeg"
       ],
-      "url": "https://www.airbnb.com/rooms/1446869038805495580"
+      "url": "https://www.airbnb.com/rooms/1446869038805495580",
+      "address": "Lorong Selamat 26, Kampung Kubang Buaya, 25250 Kuantan, Pahang, Malaysia",
+      "lat": 3.8148,
+      "lng": 103.3448
     },
     {
       "id": "1461543700474356396",
@@ -457,7 +481,10 @@
         "/images/listings/1461543700474356396/17.jpeg",
         "/images/listings/1461543700474356396/18.jpeg"
       ],
-      "url": "https://www.airbnb.com/rooms/1461543700474356396"
+      "url": "https://www.airbnb.com/rooms/1461543700474356396",
+      "address": "SOP Trail, 25300 Kuantan, Pahang, Malaysia",
+      "lat": 3.83181403731773,
+      "lng": 103.32381888923351
     }
   ],
   "reviews": [
@@ -470,7 +497,7 @@
       "reviewerPhoto": "/images/reviewers/0.jpg"
     },
     {
-      "text": "The location is very strategic, with plenty of restaurants and a supermarket nearby, and it's only an 8-minute drive to Teluk Chempedak. Check-in was smooth and hassle-free, as the host was onsite to manage the housekeeping. The house is spacious and comfortably accommodated our family of 10 adults, with everyone having their own bed. We had a wonderful stay. I would definitely stay here again with my family.",
+      "text": "The location is very strategic, with plenty of restaurants and a supermarket nearby, and it's only an 8-minute drive to Teluk Chempedak. Check-in was smooth and hassle-free, as the Eztidor Solution team was onsite to manage the housekeeping. The house is spacious and comfortably accommodated our family of 10 adults, with everyone having their own bed. We had a wonderful stay. I would definitely stay here again with my family.",
       "rating": 5,
       "date": "August 2026",
       "reviewer": "Izzati",
@@ -478,7 +505,7 @@
       "reviewerPhoto": "/images/reviewers/1.jpg"
     },
     {
-      "text": "We had a wonderful stay at Peikar's place! He is an excellent host, very responsive and always replied to my messages almost immediately, making the entire experience smooth and worry-free. The house is spacious, exceptionally clean, and exactly as described. It is especially suitable for large groups like ours, with plenty of space for everyone to enjoy. I highly recommend Peikar's place to anyone looking for a comfortable, private, and well-equipped stay.",
+      "text": "We had a wonderful stay with Eztidor Solution! The team is excellent — very responsive and always replied to my messages almost immediately, making the entire experience smooth and worry-free. The house is spacious, exceptionally clean, and exactly as described. It is especially suitable for large groups like ours, with plenty of space for everyone to enjoy. I highly recommend Eztidor Solution to anyone looking for a comfortable, private, and well-equipped stay.",
       "rating": 5,
       "date": "July 2026",
       "reviewer": "Nawari",
