@@ -285,12 +285,12 @@ const pad = (n: number) => String(n).padStart(2, '0');
     max-width: 100%;
     white-space: nowrap;
   }
+  html[lang='zh-CN'] .mv .mv-line { display: inline !important; }
+  html[lang='zh-CN'] .mv .mv-line:not(:last-child)::after { content: ''; }
+  html[lang='zh-CN'] .mv .mv-line:nth-child(3) { display: block !important; }
   @media (max-width: 1024px) {
     .mv .mv-line { display: inline; width: auto; white-space: normal; }
     .mv .mv-line:not(:last-child)::after { content: ' '; }
-    html[lang='zh-CN'] .mv .mv-line:not(:last-child)::after { content: ''; }
-    html[lang='zh-CN'] .mv .mv-line { display: inline !important; }
-    html[lang='zh-CN'] .mv .mv-line:nth-child(3) { display: block !important; }
     .mv .mv-title { width: calc(100vw - 48px); max-width: none; line-height: 1.02; text-wrap: balance; }
     html[lang='zh-CN'] .mv .mv-title { font-size: clamp(42px, 8vw, 68px); }
   }
