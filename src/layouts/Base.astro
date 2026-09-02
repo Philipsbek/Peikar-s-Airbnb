@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import AmbientIllustrations from '../components/AmbientIllustrations.astro';
 
 interface Props {
   title: string;
@@ -26,6 +27,16 @@ const { title, description = 'Eztidor Solution — spacious, spotless short- and
     <title>{title}</title>
   </head>
   <body>
-    <slot />
+    <AmbientIllustrations />
+    <div class="site-content">
+      <slot />
+    </div>
+    <script>
+      import '../scripts/i18n';
+    </script>
   </body>
 </html>
+
+<style is:global>
+  .site-content { position: relative; z-index: 1; }
+</style>

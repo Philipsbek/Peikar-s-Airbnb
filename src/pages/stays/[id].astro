@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import WhatsAppButton from '../../components/WhatsAppButton.astro';
 import PhotoLightbox from '../../components/PhotoLightbox.astro';
+import LanguageSwitcher from '../../components/LanguageSwitcher.astro';
 import host from '../../data/host.json';
 
 export function getStaticPaths() {
@@ -45,7 +46,10 @@ const waHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComponent(
   <header class="pd-top">
     <div class="container pd-top-inner">
       <a href="/" class="pd-brand"><img src="/images/logo.png" alt="Eztidor Solution — Homestay Services" /></a>
-      <a href="/#stays" class="pd-back">All stays</a>
+      <div class="pd-top-actions">
+        <LanguageSwitcher />
+        <a href="/#stays" class="pd-back">All stays</a>
+      </div>
     </div>
   </header>
 
@@ -172,6 +176,7 @@ const waHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComponent(
   .pd-top-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
   .pd-brand { display: inline-flex; align-items: center; }
   .pd-brand img { height: 40px; width: auto; display: block; }
+  .pd-top-actions { display: flex; align-items: center; gap: var(--spacing-12); }
   @media (max-width: 560px) { .pd-brand img { height: 34px; } }
   .pd-back { font-size: var(--text-body); }
   .pd-back:hover { color: var(--color-coral-pulse); }

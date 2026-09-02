@@ -1,0 +1,12 @@
+<div class="language-switcher" role="group" aria-label="Choose language">
+  <button type="button" data-language="en" aria-pressed="true">EN</button>
+  <button type="button" data-language="ms" aria-pressed="false">BM</button>
+  <button type="button" data-language="zh" aria-pressed="false">中文</button>
+</div>
+
+<style>
+  .language-switcher { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border: var(--hairline); border-radius: var(--radius-full); background: rgba(255, 255, 255, 0.64); }
+  .language-switcher button { min-width: 38px; height: 32px; padding-inline: 9px; border: 0; border-radius: var(--radius-full); background: transparent; color: #4a4a44; font-size: 12px; font-weight: 700; transition: background 0.16s ease, color 0.16s ease; }
+  .language-switcher button:hover { color: var(--color-coral-pulse); }
+  .language-switcher button[aria-pressed='true'] { background: var(--color-coral-pulse); color: #fff; }
+</style>

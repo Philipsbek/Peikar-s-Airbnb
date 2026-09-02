@@ -1,5 +1,6 @@
 ---
 import host from '../data/host.json';
+import LanguageSwitcher from './LanguageSwitcher.astro';
 
 const links = [
   { href: '#stays', label: 'Stays' },
@@ -18,8 +19,10 @@ const waHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComponent(
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
     </div>
 
+    <div class="nav-language"><LanguageSwitcher /></div>
+
     <a href={waHref} target="_blank" rel="noopener" class="btn btn--coral nav-cta">
-      Chat with us
+      Book now
     </a>
 
     <button
@@ -37,8 +40,12 @@ const waHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComponent(
   <div class="nav-mobile container" id="nav-mobile" hidden>
     <div class="nav-mobile-panel">
       {links.map((l) => <a href={l.href} class="nav-mobile-link">{l.label}</a>)}
+      <div class="nav-mobile-language">
+        <span>Language</span>
+        <LanguageSwitcher />
+      </div>
       <a href={waHref} target="_blank" rel="noopener" class="btn btn--coral nav-mobile-cta">
-        Chat with us
+        Book now
       </a>
     </div>
   </div>
@@ -80,6 +87,7 @@ const waHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComponent(
   .nav-links a { transition: color 0.15s ease; }
   .nav-links a:hover { color: var(--color-coral-pulse); }
   .nav-cta { padding: 10px 20px; font-size: var(--text-caption); }
+  .nav-language { margin-left: auto; }
 
   /* Burger button — hidden on desktop */
   .nav-burger {
@@ -131,10 +139,12 @@ const waHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComponent(
     justify-content: center;
     font-size: var(--text-body);
   }
+  .nav-mobile-language { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-12); padding: var(--spacing-12) var(--spacing-16); border-top: var(--hairline); margin-top: var(--spacing-4); font-size: var(--text-caption); font-weight: 700; }
 
   @media (max-width: 860px) {
     .nav-links,
-    .nav-cta { display: none; }
+    .nav-cta,
+    .nav-language { display: none; }
     .nav-burger { display: flex; }
   }
 

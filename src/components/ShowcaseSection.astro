@@ -131,8 +131,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
     position: relative;
     z-index: 2;
     align-self: flex-end;
-    padding: clamp(28px, 6vw, 80px);
-    max-width: 900px;
+    width: min(680px, 100%);
+    padding: clamp(48px, 8vw, 112px) clamp(24px, 7vw, 104px);
     will-change: transform, opacity;
   }
   /* Inner wrapper handles the smooth text swap (independent transform). */
@@ -148,67 +148,82 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
   .mv-eyebrow {
     display: block;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 11px;
-    letter-spacing: 0.02em;
+    width: fit-content;
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    font-family: var(--font-supreme);
+    font-size: var(--text-caption);
+    font-weight: 700;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #e2e2e2; /* Frost */
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 24px;
   }
 
   .mv-title {
     font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(44px, 9vw, 120px);
-    line-height: 0.9;
-    letter-spacing: -0.01em;
-    color: #ffffff; /* Bone */
+    font-weight: 600;
+    font-size: clamp(44px, 8.5vw, 112px);
+    line-height: 0.94;
+    letter-spacing: -0.035em;
+    color: #ffffff;
     margin: 0;
     max-width: 100%;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-    hyphens: auto;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
   }
 
   .mv-sub {
     font-family: var(--font-supreme);
     font-weight: 400;
     font-size: clamp(18px, 2.4vw, 26px);
-    line-height: 1;
-    letter-spacing: -0.02em;
+    line-height: 1.35;
+    letter-spacing: 0;
     color: #ffffff;
     margin-top: 28px;
   }
 
   .mv-btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
     margin-top: 24px;
-    padding: 12px 24px;
-    background: #444345; /* Charcoal */
-    border: 1px solid rgba(226, 226, 226, 0.6);
-    border-radius: 2px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    padding: 12px 26px;
+    background: var(--color-coral-pulse);
+    border: 1px solid var(--color-coral-pulse);
+    border-radius: var(--radius-full);
+    font-family: var(--font-supreme);
+    font-size: var(--text-caption);
+    font-weight: 700;
+    letter-spacing: 0;
     color: #ffffff;
-    transition: background 0.2s ease, border-color 0.2s ease;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
   }
   .mv-btn:hover {
-    background: #5a595b;
-    border-color: #ffffff;
+    background: var(--color-ink-black);
+    border-color: var(--color-ink-black);
+    transform: translateY(-2px);
   }
 
   .mv-meta {
     position: absolute;
-    right: clamp(20px, 5vw, 60px);
+    right: clamp(24px, 7vw, 104px);
     bottom: clamp(20px, 5vw, 60px);
     z-index: 2;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 11px;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: #e2e2e2;
+    padding: 8px 14px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    font-family: var(--font-supreme);
+    font-size: var(--text-caption);
+    font-weight: 700;
+    letter-spacing: 0;
+    color: rgba(255, 255, 255, 0.9);
     transition: opacity 0.45s ease, transform 0.5s cubic-bezier(0.22, 0.7, 0.24, 1);
   }
   .mv-meta.mv-swap {
@@ -219,7 +234,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   /* Index bars */
   .mv-dots {
     position: absolute;
-    left: clamp(28px, 6vw, 80px);
+    left: clamp(24px, 7vw, 104px);
     bottom: clamp(18px, 3.5vw, 34px);
     z-index: 2;
     display: flex;
@@ -227,28 +242,28 @@ const pad = (n: number) => String(n).padStart(2, '0');
   }
   .mv-dot {
     width: 28px;
-    height: 3px;
+    height: 5px;
     padding: 0;
     border: 0;
-    border-radius: 2px;
-    background: rgba(226, 226, 226, 0.35);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.35);
     cursor: pointer;
     transition: background 0.3s ease, width 0.3s ease;
   }
   .mv-dot:hover { background: rgba(255, 255, 255, 0.7); }
-  .mv-dot.is-active { background: #ffffff; width: 44px; }
+  .mv-dot.is-active { background: var(--color-coral-pulse); width: 44px; }
 
   /* Tablet — same breathing room between content and the index bars */
   @media (min-width: 561px) and (max-width: 1024px) {
-    .mv-content { padding-bottom: 104px; }
+    .mv-content { width: 100%; padding: 96px 24px 104px; }
     .mv-dots { bottom: 34px; }
   }
 
   @media (max-width: 560px) {
     .mv-meta { display: none; }
     /* Lift the content so the button clears the index bars below it */
-    .mv-content { padding-bottom: 88px; }
-    .mv-title { font-size: clamp(38px, 13vw, 72px); }
+    .mv-content { width: 100%; padding: 96px 24px 88px; }
+    .mv-title { font-size: clamp(36px, 12vw, 56px); }
     .mv-dots { bottom: 28px; gap: 6px; }
     .mv-dot { width: 20px; }
     .mv-dot.is-active { width: 32px; }
@@ -262,21 +277,13 @@ const pad = (n: number) => String(n).padStart(2, '0');
 </style>
 
 <!-- Global so the JS-rebuilt title spans (which lack Astro's scope hash) keep
-     their block stacking + underline mark. Namespaced under .mv to stay contained. -->
+     their block stacking. Namespaced under .mv to stay contained. -->
 <style is:global>
   .mv .mv-line {
     display: block;
     width: fit-content;
     max-width: 100%;
-    padding-bottom: 6px;
-  }
-  .mv .mv-line::after {
-    content: '';
-    display: block;
-    width: 42%;
-    height: 1px;
-    margin-top: 6px;
-    background: #e2e2e2;
+    white-space: nowrap;
   }
 </style>
 
