@@ -5,9 +5,22 @@ import AmbientIllustrations from '../components/AmbientIllustrations.astro';
 interface Props {
   title: string;
   description?: string;
+  keywords?: string;
+  image?: string;
+  type?: 'website' | 'article';
 }
 
-const { title, description = 'Eztidor Solution — spacious, spotless short- and long-term homestays in Kuantan, Malaysia. A verified Superhost with a 4.82 rating across 192 reviews.' } = Astro.props;
+const {
+  title,
+  description = 'Eztidor Solution — spacious, spotless short- and long-term homestays in Kuantan, Pahang, Malaysia. A verified Superhost with a 4.82 rating across 192 reviews.',
+  keywords = 'homestay Kuantan, Kuantan homestay, homestay Pahang, Kuantan accommodation, short term homestay Kuantan, long term homestay Kuantan, villa Kuantan, Eztidor Solution',
+  image = '/images/logo.png',
+  type = 'website',
+} = Astro.props;
+
+const siteUrl = Astro.site ?? new URL('https://eztidorsolution.com');
+const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = new URL(image, siteUrl).href;
 ---
 
 <!doctype html>
@@ -16,8 +29,29 @@ const { title, description = 'Eztidor Solution — spacious, spotless short- and
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Eztidor Solution" />
+    <meta name="geo.region" content="MY-06" />
+    <meta name="geo.placename" content="Kuantan, Pahang, Malaysia" />
+    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/png" href="/images/favicon.png" />
     <link rel="apple-touch-icon" href="/images/favicon.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="Eztidor Solution" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_MY" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,6 +59,7 @@ const { title, description = 'Eztidor Solution — spacious, spotless short- and
       rel="stylesheet"
     />
     <title>{title}</title>
+    <slot name="head" />
   </head>
   <body>
     <AmbientIllustrations />

@@ -1,0 +1,115 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import blog from '../../data/blog.json';
+
+const posts = [...blog.posts].sort((a, b) => b.date.localeCompare(a.date));
+const site = Astro.site ?? new URL('https://eztidorsolution.com');
+
+const blogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'Eztidor Solution Blog — Kuantan Homestay & Travel Guides',
+  description:
+    'Homestay tips and travel guides for Kuantan, Pahang, Malaysia — beaches, food, attractions and advice on short- and long-term homestays.',
+  url: new URL('/blog', site).href,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Eztidor Solution',
+    logo: { '@type': 'ImageObject', url: new URL('/images/logo.png', site).href },
+  },
+  blogPost: posts.map((p) => ({
+    '@type': 'BlogPosting',
+    headline: p.title,
+    description: p.metaDescription,
+    datePublished: p.date,
+    url: new URL(`/blog/${p.slug}`, site).href,
+    image: new URL(p.cover, site).href,
+  })),
+};
+---
+
+<Base
+  title="Kuantan Homestay & Travel Blog — Tips, Guides & Things to Do | Eztidor Solution"
+  description="Expert homestay tips and travel guides for Kuantan, Pahang, Malaysia — the best beaches, food, attractions and advice on short-term and long-term homestays in Kuantan."
+  keywords="Kuantan blog, homestay Kuantan tips, things to do in Kuantan, Kuantan travel guide, Kuantan Pahang, homestay Pahang, Teluk Cempedak"
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(blogSchema)} />
+
+  <span id="top"></span>
+  <Nav />
+  <WhatsAppButton />
+
+  <main class="blog container">
+    <header class="blog-head">
+      <span class="eyebrow">Eztidor Solution Blog</span>
+      <h1 class="section-title">Kuantan homestay &amp; travel guides</h1>
+      <p class="blog-intro">
+        Tips, guides and local know-how for your trip to Kuantan, Pahang — from the best beaches
+        and food to choosing the right short-term or long-term homestay in Kuantan.
+      </p>
+    </header>
+
+    <div class="blog-grid">
+      {posts.map((post) => (
+        <article class="blog-card">
+          <a class="blog-card-media" href={`/blog/${post.slug}`} aria-label={post.title}>
+            <img src={post.cover} alt={post.title} width="1200" height="675" loading="lazy" />
+            <span class="blog-card-cat">
+              <span data-lang="en">{post.category}</span><span data-lang="ms">{post.i18n.ms.category}</span><span data-lang="zh">{post.i18n.zh.category}</span>
+            </span>
+          </a>
+          <div class="blog-card-body">
+            <p class="blog-card-meta">{post.dateDisplay} · <span data-lang="en">{post.readTime}</span><span data-lang="ms">{post.i18n.ms.readTime}</span><span data-lang="zh">{post.i18n.zh.readTime}</span></p>
+            <h2 class="blog-card-title"><a href={`/blog/${post.slug}`}><span data-lang="en">{post.title}</span><span data-lang="ms">{post.i18n.ms.title}</span><span data-lang="zh">{post.i18n.zh.title}</span></a></h2>
+            <p class="blog-card-excerpt"><span data-lang="en">{post.excerpt}</span><span data-lang="ms">{post.i18n.ms.excerpt}</span><span data-lang="zh">{post.i18n.zh.excerpt}</span></p>
+            <a class="blog-card-link" href={`/blog/${post.slug}`}>Read more
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </main>
+
+  <footer class="blog-footer">
+    <div class="container blog-footer-inner">
+      <p class="blog-footer-brand">Eztidor<span>·</span>Solution</p>
+      <p class="blog-footer-fine">Homestays in Kuantan, Pahang, Malaysia · <a href="/">Back to home</a></p>
+    </div>
+  </footer>
+</Base>
+
+<style>
+  .blog { padding-block: var(--spacing-40) var(--spacing-96); }
+  .blog-head { max-width: 680px; margin-bottom: var(--spacing-40); }
+  .blog-head .eyebrow { display: block; margin-bottom: var(--spacing-12); }
+  .blog-intro { margin-top: var(--spacing-16); font-size: var(--text-subheading); line-height: 1.55; color: #4a4a44; }
+
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-24); }
+  .blog-card { display: flex; flex-direction: column; background: var(--color-pristine-surface); border: var(--hairline); border-radius: var(--radius-cards); overflow: hidden; transition: transform 0.2s ease; }
+  .blog-card:hover { transform: translateY(-4px); }
+  .blog-card-media { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; }
+  .blog-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .blog-card:hover .blog-card-media img { transform: scale(1.04); }
+  .blog-card-cat { position: absolute; top: 12px; left: 12px; padding: 5px 12px; border-radius: var(--radius-full); background: rgba(255, 255, 255, 0.9); color: var(--color-ink-black); font-size: var(--text-caption); font-weight: 700; }
+  .blog-card-body { display: flex; flex: 1; flex-direction: column; padding: var(--spacing-24); }
+  .blog-card-meta { font-size: var(--text-caption); color: var(--color-coral-pulse); font-weight: 700; }
+  .blog-card-title { margin-top: var(--spacing-8); font-size: var(--text-subheading); font-weight: 600; line-height: 1.3; }
+  .blog-card-title a:hover { color: var(--color-coral-pulse); }
+  .blog-card-excerpt { margin-top: var(--spacing-12); font-size: var(--text-caption); line-height: 1.55; color: #4a4a44; }
+  .blog-card-link { margin-top: var(--spacing-16); display: inline-flex; align-items: center; gap: 6px; font-size: var(--text-caption); font-weight: 700; color: var(--color-coral-pulse); }
+  .blog-card-link svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.18s ease; }
+  .blog-card-link:hover svg { transform: translateX(3px); }
+
+  @media (max-width: 900px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .blog-grid { grid-template-columns: 1fr; } }
+
+  .blog-footer { background: var(--color-ink-black); color: #fff; padding-block: var(--spacing-40); margin-top: var(--spacing-40); }
+  .blog-footer-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-16); flex-wrap: wrap; }
+  .blog-footer-brand { font-family: var(--font-display); font-size: var(--text-heading); font-weight: 600; }
+  .blog-footer-brand span { color: var(--color-clay); margin-inline: 2px; }
+  .blog-footer-fine { font-size: var(--text-caption); opacity: 0.7; }
+  .blog-footer-fine a { text-decoration: underline; }
+</style>

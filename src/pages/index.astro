@@ -27,9 +27,48 @@ const facts = [
   { label: 'Homes', value: `${host.stats.totalListings} stays` },
   { label: 'Languages', value: host.languages },
 ];
+
+const site = Astro.site ?? new URL('https://eztidorsolution.com');
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LodgingBusiness',
+  '@id': new URL('/', site).href + '#business',
+  name: 'Eztidor Solution',
+  description:
+    'Spacious, spotless short-term and long-term homestays in Kuantan, Pahang, Malaysia — hosted by a verified Superhost.',
+  url: new URL('/', site).href,
+  logo: new URL('/images/logo.png', site).href,
+  image: new URL('/images/logo.png', site).href,
+  telephone: '+' + host.whatsapp.number,
+  priceRange: '$$',
+  currenciesAccepted: 'MYR',
+  knowsLanguage: ['en', 'ms', 'zh'],
+  areaServed: { '@type': 'City', name: 'Kuantan' },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Kuantan',
+    addressRegion: 'Pahang',
+    addressCountry: 'MY',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: 3.8077, longitude: 103.326 },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: String(host.stats.rating),
+    reviewCount: String(host.stats.reviews),
+    bestRating: '5',
+  },
+  amenityFeature: [
+    { '@type': 'LocationFeatureSpecification', name: 'Free WiFi', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Air conditioning', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Kitchen', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Free parking', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Swimming pool', value: true },
+  ],
+};
 ---
 
 <Base title="Eztidor Solution · Vacation homes in Kuantan, Malaysia">
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(localBusinessSchema)} />
   <span id="top"></span>
   <Nav />
   <WhatsAppButton />

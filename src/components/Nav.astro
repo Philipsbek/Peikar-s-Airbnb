@@ -3,9 +3,10 @@ import host from '../data/host.json';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 
 const links = [
-  { href: '#stays', label: 'Stays' },
-  { href: '#reviews', label: 'Reviews' },
-  { href: '#about', label: 'About' },
+  { href: '/#stays', label: 'Stays' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/#reviews', label: 'Reviews' },
+  { href: '/#about', label: 'About' },
 ];
 
 const waHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComponent(host.whatsapp.message)}`;
@@ -13,7 +14,7 @@ const waHref = `https://wa.me/${host.whatsapp.number}?text=${encodeURIComponent(
 
 <header class="nav-wrap">
   <nav class="nav container">
-    <a href="#top" class="nav-brand"><img src="/images/logo.png" alt="Eztidor Solution — Homestay Services" /></a>
+    <a href="/" class="nav-brand"><img src="/images/logo.png" alt="Eztidor Solution — Homestay Services" /></a>
 
     <div class="nav-links">
       {links.map((l) => <a href={l.href}>{l.label}</a>)}

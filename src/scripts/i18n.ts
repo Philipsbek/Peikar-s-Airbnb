@@ -4,6 +4,13 @@ const translations: Record<'ms' | 'zh', Record<string, string>> = {
   ms: {
     'Stays': 'Penginapan', 'Reviews': 'Ulasan', 'About': 'Tentang', 'Book now': 'Tempah sekarang', 'Language': 'Bahasa',
     'Open menu': 'Buka menu', 'Close menu': 'Tutup menu', 'Choose language': 'Pilih bahasa',
+    'Blog': 'Blog', 'Eztidor Solution Blog': 'Blog Eztidor Solution',
+    'Kuantan homestay & travel guides': 'Panduan homestay & pelancongan Kuantan',
+    'Tips, guides and local know-how for your trip to Kuantan, Pahang — from the best beaches and food to choosing the right short-term or long-term homestay in Kuantan.': 'Tip, panduan dan pengetahuan tempatan untuk percutian anda ke Kuantan, Pahang — daripada pantai dan makanan terbaik hingga memilih homestay jangka pendek atau panjang yang sesuai di Kuantan.',
+    'Read more': 'Baca lagi', 'Keep reading': 'Teruskan membaca', '← All articles': '← Semua artikel',
+    'Looking for a homestay in Kuantan?': 'Mencari homestay di Kuantan?',
+    'Eztidor Solution offers spacious, fully-furnished short- and long-term homestays across Kuantan, Pahang.': 'Eztidor Solution menawarkan homestay jangka pendek dan panjang yang luas serta lengkap berperabot di seluruh Kuantan, Pahang.',
+    'Browse our stays': 'Lihat penginapan kami', 'Home': 'Laman Utama', 'Back to home': 'Kembali ke laman utama',
     'Homestays in Kuantan, Malaysia': 'Homestay di Kuantan, Malaysia',
     'Short stay or long stay — we have the home for it.': 'Penginapan singkat atau panjang — kami ada rumah yang sesuai.',
     "Eztidor Solution runs spacious, spotless, fully-furnished homes across Kuantan. Whether you need a place for the weekend or for the season, choose the way you'd like to stay.": 'Eztidor Solution mengurus rumah yang luas, bersih dan lengkap berperabot di seluruh Kuantan. Sama ada untuk hujung minggu atau tempoh lebih panjang, pilih cara penginapan anda.',
@@ -57,6 +64,13 @@ const translations: Record<'ms' | 'zh', Record<string, string>> = {
   zh: {
     'Stays': '住宿', 'Reviews': '评价', 'About': '关于我们', 'Book now': '立即预订', 'Language': '语言',
     'Open menu': '打开菜单', 'Close menu': '关闭菜单', 'Choose language': '选择语言',
+    'Blog': '博客', 'Eztidor Solution Blog': 'Eztidor Solution 博客',
+    'Kuantan homestay & travel guides': '关丹民宿与旅游指南',
+    'Tips, guides and local know-how for your trip to Kuantan, Pahang — from the best beaches and food to choosing the right short-term or long-term homestay in Kuantan.': '关丹（彭亨）旅行的贴士、指南与本地经验——从最棒的海滩与美食，到如何选择合适的关丹短租或长租民宿。',
+    'Read more': '阅读更多', 'Keep reading': '继续阅读', '← All articles': '← 所有文章',
+    'Looking for a homestay in Kuantan?': '在找关丹民宿吗？',
+    'Eztidor Solution offers spacious, fully-furnished short- and long-term homestays across Kuantan, Pahang.': 'Eztidor Solution 在关丹（彭亨）提供宽敞、家具齐全的短租与长租民宿。',
+    'Browse our stays': '浏览我们的房源', 'Home': '首页', 'Back to home': '返回首页',
     'Homestays in Kuantan, Malaysia': '马来西亚关丹民宿',
     'Short stay or long stay — we have the home for it.': '无论短住或长住，都有适合您的家。',
     "Eztidor Solution runs spacious, spotless, fully-furnished homes across Kuantan. Whether you need a place for the weekend or for the season, choose the way you'd like to stay.": 'Eztidor Solution 在关丹经营宽敞、整洁、家具齐全的住宿。无论周末度假或长期居住，都可选择适合您的方式。',
@@ -147,12 +161,14 @@ const patternTranslate = (value: string, language: Language) => {
     [/(\d+) guests/g, '$1 tetamu'], [/(\d+) bedrooms/g, '$1 bilik tidur'], [/(\d+) baths/g, '$1 bilik mandi'], [/(\d+) beds/g, '$1 katil'],
     [/Sleeps (\d+)/g, 'Untuk $1 tetamu'], [/(\d+) reviews/g, '$1 ulasan'], [/(\d+) photos/g, '$1 foto'], [/Entire places/g, 'Seluruh kediaman'], [/Entire place/g, 'Seluruh kediaman'],
     [/Identity verified/g, 'Identiti disahkan'], [/average across/g, 'purata daripada'], [/Groups up to/g, 'Kumpulan sehingga'],
-    [/Speaks /g, 'Bahasa: '], [/Chinese/g, 'Cina'], [/English/g, 'Inggeris'], [/\bMalay\b/g, 'Melayu'], [/Superhost/g, 'Superhost'], [/August/g, 'Ogos'], [/July/g, 'Julai']
+    [/Speaks /g, 'Bahasa: '], [/Chinese/g, 'Cina'], [/English/g, 'Inggeris'], [/\bMalay\b/g, 'Melayu'], [/Superhost/g, 'Superhost'],
+    [/January/g, 'Januari'], [/February/g, 'Februari'], [/March/g, 'Mac'], [/April/g, 'April'], [/\bMay\b/g, 'Mei'], [/June/g, 'Jun'], [/July/g, 'Julai'], [/August/g, 'Ogos'], [/September/g, 'September'], [/October/g, 'Oktober'], [/November/g, 'November'], [/December/g, 'Disember'], [/min read/g, 'min bacaan']
   ] : [
     [/(\d+) guests/g, '$1 位房客'], [/(\d+) bedrooms/g, '$1 间卧室'], [/(\d+) baths/g, '$1 间浴室'], [/(\d+) beds/g, '$1 张床'],
     [/Sleeps (\d+)/g, '可住 $1 位'], [/(\d+) reviews/g, '$1 条评价'], [/(\d+) photos/g, '$1 张照片'], [/Entire places/g, '整套房源'], [/Entire place/g, '整套房源'],
     [/Identity verified/g, '身份已验证'], [/([\d.]+) average across (\d+) 条评价/g, '平均 $1 · $2 条评价'], [/Groups up to/g, '最多容纳'],
-    [/Speaks /g, '语言：'], [/Chinese/g, '中文'], [/English/g, '英语'], [/\bMalay\b/g, '马来语'], [/\bMalaysia\b/g, '马来西亚'], [/Superhost/g, '超赞房东'], [/August/g, '8月'], [/July/g, '7月']
+    [/Speaks /g, '语言：'], [/Chinese/g, '中文'], [/English/g, '英语'], [/\bMalay\b/g, '马来语'], [/\bMalaysia\b/g, '马来西亚'], [/Superhost/g, '超赞房东'],
+    [/January/g, '1月'], [/February/g, '2月'], [/March/g, '3月'], [/April/g, '4月'], [/\bMay\b/g, '5月'], [/June/g, '6月'], [/July/g, '7月'], [/August/g, '8月'], [/September/g, '9月'], [/October/g, '10月'], [/November/g, '11月'], [/December/g, '12月'], [/min read/g, '分钟阅读']
   ];
   replacements.forEach(([pattern, replacement]) => { compound = compound.replace(pattern, replacement); });
   return compound;

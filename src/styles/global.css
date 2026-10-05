@@ -145,6 +145,14 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; }
   font-weight: 700;
 }
 
+/* Per-language content blocks (blog) — shown based on <html lang> ---------- */
+[data-lang='ms'],
+[data-lang='zh'] { display: none; }
+html[lang='ms'] [data-lang='en'],
+html[lang^='zh'] [data-lang='en'] { display: none; }
+html[lang='ms'] [data-lang='ms'] { display: revert; }
+html[lang^='zh'] [data-lang='zh'] { display: revert; }
+
 /* Frosted glass on white surfaces across the site ------------------------- */
 .card,
 .review,
