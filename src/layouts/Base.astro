@@ -62,16 +62,74 @@ const ogImage = new URL(image, siteUrl).href;
     <slot name="head" />
   </head>
   <body>
+    <div id="page-loader" class="page-loader" role="status" aria-label="Loading">
+      <div class="pl-inner">
+        <img src="/images/logo.png" alt="Eztidor Solution" class="pl-logo" width="220" height="73" fetchpriority="low" decoding="async" />
+        <span class="pl-bar" aria-hidden="true"></span>
+      </div>
+    </div>
+
     <AmbientIllustrations />
     <div class="site-content">
       <slot />
     </div>
     <script>
       import '../scripts/i18n';
+      import '../scripts/page-loader';
     </script>
   </body>
 </html>
 
 <style is:global>
   .site-content { position: relative; z-index: 1; }
+
+  /* Page-change loader — warm cream canvas, logo + sage-green progress bar */
+  .page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    background: var(--color-warm-canvas);
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+  .page-loader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .pl-inner { display: flex; flex-direction: column; align-items: center; gap: 22px; }
+  .pl-logo { height: 62px; width: auto; animation: pl-pulse 1.5s ease-in-out infinite; }
+  .pl-bar {
+    position: relative;
+    width: 170px;
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(42, 35, 24, 0.12);
+    overflow: hidden;
+  }
+  .pl-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -40%;
+    height: 100%;
+    width: 40%;
+    border-radius: 999px;
+    background: var(--color-coral-pulse);
+    animation: pl-slide 1.1s ease-in-out infinite;
+  }
+  @keyframes pl-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.72; transform: scale(0.97); }
+  }
+  @keyframes pl-slide {
+    0% { left: -40%; }
+    60% { left: 70%; }
+    100% { left: 110%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pl-logo { animation: none; }
+    .pl-bar::after { animation: none; left: 0; width: 100%; }
+  }
 </style>
