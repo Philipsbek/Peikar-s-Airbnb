@@ -4,7 +4,7 @@ const translations: Record<'ms' | 'zh', Record<string, string>> = {
   ms: {
     'Stays': 'Penginapan', 'Reviews': 'Ulasan', 'About': 'Tentang', 'Book now': 'Tempah sekarang', 'Language': 'Bahasa',
     'Open menu': 'Buka menu', 'Close menu': 'Tutup menu', 'Choose language': 'Pilih bahasa',
-    'Blog': 'Blog', 'Eztidor Solution Blog': 'Blog Eztidor Solution',
+    'Blogs': 'Blog', 'Blog': 'Blog', 'Eztidor Solution Blog': 'Blog Eztidor Solution',
     'Kuantan homestay & travel guides': 'Panduan homestay & pelancongan Kuantan',
     'Tips, guides and local know-how for your trip to Kuantan, Pahang — from the best beaches and food to choosing the right short-term or long-term homestay in Kuantan.': 'Tip, panduan dan pengetahuan tempatan untuk percutian anda ke Kuantan, Pahang — daripada pantai dan makanan terbaik hingga memilih homestay jangka pendek atau panjang yang sesuai di Kuantan.',
     'Read more': 'Baca lagi', 'Keep reading': 'Teruskan membaca', '← All articles': '← Semua artikel',
@@ -66,7 +66,7 @@ const translations: Record<'ms' | 'zh', Record<string, string>> = {
   zh: {
     'Stays': '住宿', 'Reviews': '评价', 'About': '关于我们', 'Book now': '立即预订', 'Language': '语言',
     'Open menu': '打开菜单', 'Close menu': '关闭菜单', 'Choose language': '选择语言',
-    'Blog': '博客', 'Eztidor Solution Blog': 'Eztidor Solution 博客',
+    'Blogs': '博客', 'Blog': '博客', 'Eztidor Solution Blog': 'Eztidor Solution 博客',
     'Kuantan homestay & travel guides': '关丹民宿与旅游指南',
     'Tips, guides and local know-how for your trip to Kuantan, Pahang — from the best beaches and food to choosing the right short-term or long-term homestay in Kuantan.': '关丹（彭亨）旅行的贴士、指南与本地经验——从最棒的海滩与美食，到如何选择合适的关丹短租或长租民宿。',
     'Read more': '阅读更多', 'Keep reading': '继续阅读', '← All articles': '← 所有文章',
