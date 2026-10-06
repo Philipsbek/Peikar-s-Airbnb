@@ -21,6 +21,23 @@ const {
 const siteUrl = Astro.site ?? new URL('https://eztidorsolution.com');
 const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
 const ogImage = new URL(image, siteUrl).href;
+
+// Content Security Policy — applied in production only (the dev server needs
+// inline scripts / HMR). Allows our own assets, Google Fonts and the Google
+// Maps embed used on property pages; blocks everything else.
+const csp = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "img-src 'self' data:",
+  "font-src 'self' https://fonts.gstatic.com",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "script-src 'self'",
+  "connect-src 'self'",
+  "frame-src https://www.google.com https://maps.google.com",
+  "form-action 'self'",
+  "upgrade-insecure-requests",
+].join('; ');
 ---
 
 <!doctype html>
@@ -28,6 +45,8 @@ const ogImage = new URL(image, siteUrl).href;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {import.meta.env.PROD && <meta http-equiv="Content-Security-Policy" content={csp} />}
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
     <meta name="robots" content="index, follow" />
