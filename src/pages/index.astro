@@ -51,12 +51,9 @@ const localBusinessSchema = {
     addressCountry: 'MY',
   },
   geo: { '@type': 'GeoCoordinates', latitude: 3.8077, longitude: 103.326 },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: String(host.stats.rating),
-    reviewCount: String(host.stats.reviews),
-    bestRating: '5',
-  },
+  // NOTE: aggregateRating intentionally omitted. Google requires it to reflect
+  // first-party reviews shown on this page — not ratings pulled from Airbnb.
+  // Only add it back once you collect genuine reviews on your own site/Google.
   amenityFeature: [
     { '@type': 'LocationFeatureSpecification', name: 'Free WiFi', value: true },
     { '@type': 'LocationFeatureSpecification', name: 'Air conditioning', value: true },
@@ -250,6 +247,7 @@ const localBusinessSchema = {
             </li>
           ))}
         </ul>
+        <p class="about-note">Rating and reviews from Airbnb.</p>
       </aside>
     </div>
   </section>
@@ -260,6 +258,7 @@ const localBusinessSchema = {
       <div class="reviews-head">
         <span class="eyebrow">What guests say</span>
         <h2 class="section-title">{host.stats.reviews} reviews · {host.stats.rating} average</h2>
+        <p class="reviews-note">Verified guest ratings and reviews from our Airbnb listings.</p>
       </div>
       <div class="reviews-grid">
         {host.reviews.map((r) => (
@@ -524,6 +523,8 @@ const localBusinessSchema = {
   /* ---------- Reviews ---------- */
   .reviews-head { margin-bottom: var(--spacing-40); }
   .reviews-head .eyebrow { display: block; margin-bottom: var(--spacing-12); }
+  .reviews-note { margin-top: var(--spacing-12); font-size: var(--text-caption); color: #6b6258; }
+  .about-note { margin-top: var(--spacing-16); font-size: var(--text-caption); color: #7a716a; }
   .reviews-grid { columns: 3; column-gap: var(--spacing-24); }
   @media (max-width: 900px) { .reviews-grid { columns: 2; } }
   @media (max-width: 560px) { .reviews-grid { columns: 1; } }
