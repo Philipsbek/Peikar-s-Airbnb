@@ -18,7 +18,7 @@ const {
   type = 'website',
 } = Astro.props;
 
-const siteUrl = Astro.site ?? new URL('https://eztidorsolution.com');
+const siteUrl = Astro.site ?? new URL('https://eztidor.com');
 const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
 const ogImage = new URL(image, siteUrl).href;
 

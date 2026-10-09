@@ -10,7 +10,7 @@ export function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const site = Astro.site ?? new URL('https://eztidorsolution.com');
+const site = Astro.site ?? new URL('https://eztidor.com');
 const url = new URL(`/blog/${post.slug}`, site).href;
 const coverAbs = new URL(post.cover, site).href;
 
