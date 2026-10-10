@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import AmbientIllustrations from '../components/AmbientIllustrations.astro';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 
 interface Props {
   title: string;
@@ -29,11 +30,11 @@ const csp = [
   "default-src 'self'",
   "base-uri 'self'",
   "object-src 'none'",
-  "img-src 'self' data:",
+  "img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com",
   "font-src 'self' https://fonts.gstatic.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "script-src 'self'",
-  "connect-src 'self'",
+  "script-src 'self' https://www.googletagmanager.com",
+  "connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com",
   "frame-src https://www.google.com https://maps.google.com",
   "form-action 'self'",
   "upgrade-insecure-requests",
@@ -83,6 +84,7 @@ const csp = [
       rel="stylesheet"
     />
     <title>{title}</title>
+    <GoogleAnalytics />
     <slot name="head" />
   </head>
   <body>

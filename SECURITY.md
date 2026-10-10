@@ -7,7 +7,9 @@ Below is what's already in place and what to do at launch.
 ## Already applied (in the code / build)
 
 - **Content-Security-Policy** (production only) — restricts what can load/run:
-  our own assets, Google Fonts, and the Google Maps embed only. Blocks injected
+  our own assets, Google Fonts, the Google Maps embed, and Google Analytics
+  (gtag.js) only. The GA config runs from a first-party bundled script, so no
+  `'unsafe-inline'` is needed. Blocks injected
   scripts, other origins, plugins (`object-src 'none'`), etc. See `Base.astro`
   (meta, prod only) and `public/_headers` (HTTP header, stronger).
 - **Security headers** via `public/_headers` (Netlify / Cloudflare Pages):
@@ -52,7 +54,7 @@ Below is what's already in place and what to do at launch.
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self'; frame-src https://www.google.com https://maps.google.com; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' https://www.googletagmanager.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; frame-src https://www.google.com https://maps.google.com; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" },
         { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" },
@@ -66,7 +68,7 @@ Below is what's already in place and what to do at launch.
 
 ### Nginx
 ```nginx
-add_header Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self'; frame-src https://www.google.com https://maps.google.com; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" always;
+add_header Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' https://www.googletagmanager.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; frame-src https://www.google.com https://maps.google.com; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" always;
 add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
 add_header X-Content-Type-Options "nosniff" always;
 add_header X-Frame-Options "DENY" always;
@@ -76,7 +78,7 @@ add_header Permissions-Policy "geolocation=(), camera=(), microphone=(), payment
 
 ### Apache (`.htaccess`)
 ```apache
-Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self'; frame-src https://www.google.com https://maps.google.com; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' https://www.googletagmanager.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; frame-src https://www.google.com https://maps.google.com; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
 Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
 Header always set X-Content-Type-Options "nosniff"
 Header always set X-Frame-Options "DENY"
