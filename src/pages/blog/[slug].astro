@@ -81,8 +81,8 @@ const breadcrumbSchema = {
 
     <article class="article container">
       <div class="article-body" data-lang="en" set:html={post.body} />
-      <div class="article-body" data-lang="ms" set:html={post.i18n.ms.body} />
-      <div class="article-body" data-lang="zh" set:html={post.i18n.zh.body} />
+      <div class="article-body" data-lang="ms" set:html={post.i18n.ms.body || post.body} />
+      <div class="article-body" data-lang="zh" set:html={post.i18n.zh.body || post.body} />
 
       <div class="article-tags">
         {post.keywords.map((k) => <span class="tag">{k}</span>)}
