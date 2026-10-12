@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://eztidor.com/sitemap-index.xml
+Sitemap: https://www.eztidor.com/sitemap-index.xml

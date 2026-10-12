@@ -5,7 +5,7 @@ import WhatsAppButton from '../../components/WhatsAppButton.astro';
 import blog from '../../data/blog.json';
 
 const posts = [...blog.posts].sort((a, b) => b.date.localeCompare(a.date));
-const site = Astro.site ?? new URL('https://eztidor.com');
+const site = Astro.site ?? new URL('https://www.eztidor.com');
 
 const blogSchema = {
   '@context': 'https://schema.org',
